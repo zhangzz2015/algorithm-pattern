@@ -4,141 +4,192 @@
 
 ### 二叉树遍历
 
-**前序遍历**：**先访问根节点**，再前序遍历左子树，再前序遍历右子树
-**中序遍历**：先中序遍历左子树，**再访问根节点**，再中序遍历右子树
-**后序遍历**：先后序遍历左子树，再后序遍历右子树，**再访问根节点**
+**前序遍历**：**先访问根节点**，再前序遍历左子树，再前序遍历右子树 **中序遍历**：先中序遍历左子树，**再访问根节点**，再中序遍历右子树 **后序遍历**：先后序遍历左子树，再后序遍历右子树，**再访问根节点**
 
 注意点
 
-- 以根访问顺序决定是什么遍历
-- 左子树都是优先右子树
+* 以根访问顺序决定是什么遍历
+* 左子树都是优先右子树
 
 #### 前序递归
 
+先访问根节点，再左节点，右节点。
+
 ```go
-func preorderTraversal(root *TreeNode)  {
-    if root==nil{
-        return
-    }
+void preorderTraversal(TreeNode * root, vector<int>& ret)  
+{
+    if(root==NULL)
+        return; 
+
     // 先访问根再访问左右
-    fmt.Println(root.Val)
-    preorderTraversal(root.Left)
-    preorderTraversal(root.Right)
+    // cout<<"val:" << root->val << "\n";
+    ret.push_back(root->val);
+    preorderTraversal(root->left);
+    preorderTraversal(root->right); 
+}
+```
+
+#### 中序递归
+
+先访问左节点，再根节点，右节点。
+
+```
+void inorderTranversal(TreeNode* root, vector<int>& ret)
+{
+     if(root==NULL)
+        return ; 
+     
+    // visit left, then root, last visit right.  
+    inorderTranversal(root->left, ret); 
+    ret.push_back(root->val); 
+    inorderTranversal(root->right, ret);      
+}
+
+```
+
+#### 后序递归
+
+先访问左节点，再右节点，最后根节点。
+
+```
+void postTranversal(TreeNode* root, vector<int>& ret)
+{
+     if(root==NULL)
+        return ; 
+     
+    // visit left, then root, last visit right.  
+    postTranversal(root->left, ret); 
+    postTranversal(root->right, ret);
+    ret.push_back(root->val);           
 }
 ```
 
 #### 前序非递归
 
+使用双色方法，该方法可统一前序，中序，和后序，可递归相同。
+
 ```go
 // V3：通过非递归遍历
-func preorderTraversal(root *TreeNode) []int {
+void preorderTraversal(TreeNode* root, vector<int>& ret) {
     // 非递归
-    if root == nil{
-        return nil
-    }
-    result:=make([]int,0)
-    stack:=make([]*TreeNode,0)
+    if (root==NULL)
+        return;
+        
+    vector<pair<TreeNode*, bool>> stack; 
+    
+    stack.push_back(make_pair(root, false) ); 
 
-    for root!=nil || len(stack)!=0{
-        for root !=nil{
-            // 前序遍历，所以先保存结果
-            result=append(result,root.Val)
-            stack=append(stack,root)
-            root=root.Left
+    while(stack.size())
+    {
+        pair<TreeNode*, bool> topNode= stack.back(); 
+        stack.pop_back(); 
+        if(topNode.first == NULL)  continue; 
+        
+        if(topNode.second == false)
+        {
+            stack.push_back(make_pair(topNode, true)); 
+            stack.push_back(make_pair(topNode->left, false)); 
+            stack.push_back(make_pair(topNode->right, false)); 
         }
-        // pop
-        node:=stack[len(stack)-1]
-        stack=stack[:len(stack)-1]
-        root=node.Right
+        else
+        {
+           ret.push_bac(topNode->val); 
+        }        
     }
-    return result
 }
 ```
 
 #### 中序非递归
 
 ```go
-// 思路：通过stack 保存已经访问的元素，用于原路返回
-func inorderTraversal(root *TreeNode) []int {
-    result := make([]int, 0)
-    if root == nil {
-        return result
-    }
-    stack := make([]*TreeNode, 0)
-    for len(stack) > 0 || root != nil {
-        for root != nil {
-            stack = append(stack, root)
-            root = root.Left // 一直向左
+void inorderTraversal(TreeNode* root, vector<int>& ret) {
+    // 非递归
+    if (root==NULL)
+        return;
+        
+    vector<pair<TreeNode*, bool>> stack; 
+    
+    stack.push_back(make_pair(root, false) ); 
+
+    while(stack.size())
+    {
+        pair<TreeNode*, bool> topNode= stack.back(); 
+        stack.pop_back(); 
+        if(topNode.first == NULL)  continue; 
+        
+        if(topNode.second == false)
+        {
+            stack.push_back(make_pair(topNode->left, false));         
+            stack.push_back(make_pair(topNode, true)); 
+            stack.push_back(make_pair(topNode->right, false)); 
         }
-        // 弹出
-        val := stack[len(stack)-1]
-        stack = stack[:len(stack)-1]
-        result = append(result, val.Val)
-        root = val.Right
+        else
+        {
+           ret.push_bac(topNode->val); 
+        }        
     }
-    return result
 }
 ```
 
 #### 后序非递归
 
 ```go
-func postorderTraversal(root *TreeNode) []int {
-	// 通过lastVisit标识右子节点是否已经弹出
-	if root == nil {
-		return nil
-	}
-	result := make([]int, 0)
-	stack := make([]*TreeNode, 0)
-	var lastVisit *TreeNode
-	for root != nil || len(stack) != 0 {
-		for root != nil {
-			stack = append(stack, root)
-			root = root.Left
-		}
-		// 这里先看看，先不弹出
-		node:= stack[len(stack)-1]
-		// 根节点必须在右节点弹出之后，再弹出
-		if node.Right == nil || node.Right == lastVisit {
-			stack = stack[:len(stack)-1] // pop
-			result = append(result, node.Val)
-			// 标记当前这个节点已经弹出过
-			lastVisit = node
-		} else {
-			root = node.Right
-		}
-	}
-	return result
+void inorderTraversal(TreeNode* root, vector<int>& ret) {
+    // 非递归
+    if (root==NULL)
+        return;
+        
+    vector<pair<TreeNode*, bool>> stack; 
+    
+    stack.push_back(make_pair(root, false) ); 
+
+    while(stack.size())
+    {
+        pair<TreeNode*, bool> topNode= stack.back(); 
+        stack.pop_back(); 
+        if(topNode.first == NULL)  continue; 
+        
+        if(topNode.second == false)
+        {
+            stack.push_back(make_pair(topNode->left, false));          
+            stack.push_back(make_pair(topNode->right, false)); 
+            stack.push_back(make_pair(topNode, true));            
+        }
+        else
+        {
+           ret.push_bac(topNode->val); 
+        }        
+    }
 }
 ```
 
 注意点
 
-- 核心就是：根节点必须在右节点弹出之后，再弹出
+* 核心就是：根节点必须在右节点弹出之后，再弹出
 
 #### DFS 深度搜索-从上到下
 
 ```go
-type TreeNode struct {
-    Val   int
-    Left  *TreeNode
-    Right *TreeNode
-}
+struct Node { 
+	int val; 
+	struct Node* left; 
+	struct Node* right; 
+}; 
 
-func preorderTraversal(root *TreeNode) []int {
-    result := make([]int, 0)
-    dfs(root, &result)
-    return result
+void preorderTraversal(TreeNode* root) 
+{
+    vector<int> result; 
+    dfs(root, result);
+    return result;
 }
 
 // V1：深度遍历，结果指针作为参数传入到函数内部
-func dfs(root *TreeNode, result *[]int) {
-    if root == nil {
-        return
-    }
-    *result = append(*result, root.Val)
-    dfs(root.Left, result)
-    dfs(root.Right, result)
+void dfs(TreeNode * root, vector<int>& result) {
+    if (root == NULL)
+        return; 
+    result.push_back(root->val)); 
+    dfs(root.left, result);
+    dfs(root.right, result);
 }
 ```
 
@@ -146,24 +197,24 @@ func dfs(root *TreeNode, result *[]int) {
 
 ```go
 // V2：通过分治法遍历
-func preorderTraversal(root *TreeNode) []int {
-    result := divideAndConquer(root)
-    return result
+vector<int> preorderTraversal(root *TreeNode) {
+    vector<int> result = divideAndConquer(root); 
+    return result;
 }
-func divideAndConquer(root *TreeNode) []int {
-    result := make([]int, 0)
+vector<int> divideAndConquer(root *TreeNode) {
     // 返回条件(null & leaf)
     if root == nil {
-        return result
+        return {};
     }
     // 分治(Divide)
-    left := divideAndConquer(root.Left)
-    right := divideAndConquer(root.Right)
+    vector<int> left  = divideAndConquer(root->left);
+    vector<int> right = divideAndConquer(root->right);
     // 合并结果(Conquer)
-    result = append(result, root.Val)
-    result = append(result, left...)
-    result = append(result, right...)
-    return result
+    vector<int> result; 
+    result.push_back(root->val); 
+    result.insert(result.end(), left.begin(), left.end());
+    result.insert(result.end(), right.begin(), right.end());    
+    return result;
 }
 ```
 
@@ -211,15 +262,15 @@ func levelOrder(root *TreeNode) [][]int {
 
 适用场景
 
-- 快速排序
-- 归并排序
-- 二叉树相关问题
+* 快速排序
+* 归并排序
+* 二叉树相关问题
 
 分治法模板
 
-- 递归返回条件
-- 分段处理
-- 合并结果
+* 递归返回条件
+* 分段处理
+* 合并结果
 
 ```go
 func traversal(root *TreeNode) ResultType  {
@@ -264,7 +315,7 @@ func divideAndConquer(root *TreeNode) []int {
 }
 ```
 
-#### 归并排序  
+#### 归并排序 &#x20;
 
 ```go
 func MergeSort(nums []int) []int {
@@ -308,7 +359,7 @@ func merge(left, right []int) (result []int) {
 
 > 递归需要返回结果用于合并
 
-#### 快速排序  
+#### 快速排序 &#x20;
 
 ```go
 func QuickSort(nums []int) []int {
@@ -349,8 +400,7 @@ func swap(nums []int, i, j int) {
 
 注意点：
 
-> 快排由于是原地交换所以没有合并过程
-> 传入的索引是存在的索引（如：0、length-1 等），越界可能导致崩溃
+> 快排由于是原地交换所以没有合并过程 传入的索引是存在的索引（如：0、length-1 等），越界可能导致崩溃
 
 常见题目示例
 
@@ -386,9 +436,7 @@ func maxDepth(root *TreeNode) int {
 
 > 给定一个二叉树，判断它是否是高度平衡的二叉树。
 
-思路：分治法，左边平衡 && 右边平衡 && 左右两边高度 <= 1，
-因为需要返回是否平衡及高度，要么返回两个数据，要么合并两个数据，
-所以用-1 表示不平衡，>0 表示树高度（二义性：一个变量有两种含义）。
+思路：分治法，左边平衡 && 右边平衡 && 左右两边高度 <= 1， 因为需要返回是否平衡及高度，要么返回两个数据，要么合并两个数据， 所以用-1 表示不平衡，>0 表示树高度（二义性：一个变量有两种含义）。
 
 ```go
 func isBalanced(root *TreeNode) bool {
@@ -514,7 +562,7 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 
 [binary-tree-level-order-traversal](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
 
-> 给你一个二叉树，请你返回其按  **层序遍历**  得到的节点值。 （即逐层地，从左到右访问所有节点）
+> 给你一个二叉树，请你返回其按  **层序遍历**  得到的节点值。 （即逐层地，从左到右访问所有节点）
 
 思路：用一个队列记录一层的元素，然后扫描这一层元素添加下一层元素到队列（一个数进去出来一次，所以复杂度 O(logN)）
 
@@ -680,7 +728,6 @@ func inOrder(root *TreeNode, result *[]int)  {
     inOrder(root.Right, result)
 }
 
-
 ```
 
 ```go
@@ -725,8 +772,8 @@ func helper(root *TreeNode) ResultType {
     //  5
     // / \
     // 1   4
-    //      / \
-    //     3   6
+    //      / \
+    //     3   6
 	result.Min = root
 	if left.Min != nil {
 		result.Min = left.Min
@@ -765,18 +812,18 @@ func insertIntoBST(root *TreeNode, val int) *TreeNode {
 
 ## 总结
 
-- 掌握二叉树递归与非递归遍历
-- 理解 DFS 前序遍历与分治法
-- 理解 BFS 层次遍历
+* 掌握二叉树递归与非递归遍历
+* 理解 DFS 前序遍历与分治法
+* 理解 BFS 层次遍历
 
 ## 练习
 
-- [ ] [maximum-depth-of-binary-tree](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
-- [ ] [balanced-binary-tree](https://leetcode-cn.com/problems/balanced-binary-tree/)
-- [ ] [binary-tree-maximum-path-sum](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
-- [ ] [lowest-common-ancestor-of-a-binary-tree](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
-- [ ] [binary-tree-level-order-traversal](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
-- [ ] [binary-tree-level-order-traversal-ii](https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii/)
-- [ ] [binary-tree-zigzag-level-order-traversal](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/)
-- [ ] [validate-binary-search-tree](https://leetcode-cn.com/problems/validate-binary-search-tree/)
-- [ ] [insert-into-a-binary-search-tree](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/)
+* [ ] [maximum-depth-of-binary-tree](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
+* [ ] [balanced-binary-tree](https://leetcode-cn.com/problems/balanced-binary-tree/)
+* [ ] [binary-tree-maximum-path-sum](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
+* [ ] [lowest-common-ancestor-of-a-binary-tree](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+* [ ] [binary-tree-level-order-traversal](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
+* [ ] [binary-tree-level-order-traversal-ii](https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii/)
+* [ ] [binary-tree-zigzag-level-order-traversal](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/)
+* [ ] [validate-binary-search-tree](https://leetcode-cn.com/problems/validate-binary-search-tree/)
+* [ ] [insert-into-a-binary-search-tree](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/)
