@@ -432,9 +432,13 @@ int partition(vector<int>& ret, int left, int right)
 
 > 给定一个二叉树，找出其最大深度。
 
-思路：分治法，后序遍历，bottom up，先算处左边最大深度，再计算右边的最大深度，比较两边，返回较大一边加上1个root，返回。终止条件，root为空的情况，返回0。
+思路：
+
+* 方法1： 分治法，后序遍历，bottom up，先算处左边最大深度，再计算右边的最大深度，比较两边，返回较大一边加上1个root，返回。终止条件，root为空的情况，返回0。
+* 方法2： 前序遍历，传入parent level，进入下一层。
 
 ```cpp
+// 方法1 后序遍历
 int maxDepth(root *TreeNode)
 {
    /// 终止条件
@@ -448,6 +452,24 @@ int maxDepth(root *TreeNode)
 
     // conquer：合并左右子树结果
     return max(left, right) + 1;
+}
+//方法2 前序遍历
+int maxDepth(TreeNode* root) {
+    
+    int ret =0; 
+    dfs(root, 0, ret); 
+    return ret; 
+}
+
+void dfs(TreeNode* root, int level, int& ret)
+{
+    if(root == NULL)
+        return; 
+    
+    ret = max(ret, level+1); 
+    
+    dfs(root->left, level+1, ret); 
+    dfs(root->right, level+1, ret); 
 }
 ```
 
@@ -492,9 +514,9 @@ bool maxDepth(root *TreeNode, int& depth) int {
 
 > 一般工程中，结果通过两个变量来返回，不建议用一个变量表示两种含义
 
-#### binary-tree-maximum-path-sum
+#### 124. binary-tree-maximum-path-sum
 
-[binary-tree-maximum-path-sum](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
+[binary-tree-maximum-path-sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
 
 > 给定一个**非空**二叉树，返回其最大路径和。
 
