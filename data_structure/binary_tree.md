@@ -15,7 +15,7 @@
 
 先访问根节点，再左节点，右节点。
 
-```go
+```cpp
 void preorderTraversal(TreeNode * root, vector<int>& ret)  
 {
     if(root==NULL)
@@ -33,7 +33,7 @@ void preorderTraversal(TreeNode * root, vector<int>& ret)
 
 先访问左节点，再根节点，右节点。
 
-```
+```cpp
 void inorderTranversal(TreeNode* root, vector<int>& ret)
 {
      if(root==NULL)
@@ -51,7 +51,7 @@ void inorderTranversal(TreeNode* root, vector<int>& ret)
 
 先访问左节点，再右节点，最后根节点。
 
-```
+```cpp
 void postTranversal(TreeNode* root, vector<int>& ret)
 {
      if(root==NULL)
@@ -68,7 +68,7 @@ void postTranversal(TreeNode* root, vector<int>& ret)
 
 使用双色方法，该方法可统一前序，中序，和后序，可递归相同。
 
-```go
+```cpp
 // V3：通过非递归遍历
 void preorderTraversal(TreeNode* root, vector<int>& ret) {
     // 非递归
@@ -101,7 +101,7 @@ void preorderTraversal(TreeNode* root, vector<int>& ret) {
 
 #### 中序非递归
 
-```go
+```cpp
 void inorderTraversal(TreeNode* root, vector<int>& ret) {
     // 非递归
     if (root==NULL)
@@ -133,7 +133,7 @@ void inorderTraversal(TreeNode* root, vector<int>& ret) {
 
 #### 后序非递归
 
-```go
+```cpp
 void inorderTraversal(TreeNode* root, vector<int>& ret) {
     // 非递归
     if (root==NULL)
@@ -167,9 +167,9 @@ void inorderTraversal(TreeNode* root, vector<int>& ret) {
 
 * 核心就是：根节点必须在右节点弹出之后，再弹出
 
-#### DFS 深度搜索-从上到下
+#### DFS 深度搜索-从上到下-类似前序遍历
 
-```go
+```cpp
 struct Node { 
 	int val; 
 	struct Node* left; 
@@ -193,9 +193,9 @@ void dfs(TreeNode * root, vector<int>& result) {
 }
 ```
 
-#### DFS 深度搜索-从下向上（分治法）
+#### DFS 深度搜索-从下向上（分治法）-类似后序遍历
 
-```go
+```cpp
 // V2：通过分治法遍历
 vector<int> preorderTraversal(root *TreeNode) {
     vector<int> result = divideAndConquer(root); 
@@ -224,35 +224,36 @@ vector<int> divideAndConquer(root *TreeNode) {
 
 #### BFS 层次遍历
 
-```go
-func levelOrder(root *TreeNode) [][]int {
+利用队列，维护每一层的遍历顺序。
+
+```cpp
+void levelOrder(root *TreeNode, vector<vector<int>>& result) {
     // 通过上一层的长度确定下一层的元素
-    result := make([][]int, 0)
-    if root == nil {
-        return result
+    if (root == NULL) {
+        return; 
     }
-    queue := make([]*TreeNode, 0)
-    queue = append(queue, root)
-    for len(queue) > 0 {
-        list := make([]int, 0)
-        // 为什么要取length？
-        // 记录当前层有多少元素（遍历当前层，再添加下一层）
-        l := len(queue)
-        for i := 0; i < l; i++ {
-            // 出队列
-            level := queue[0]
-            queue = queue[1:]
-            list = append(list, level.Val)
-            if level.Left != nil {
-                queue = append(queue, level.Left)
-            }
-            if level.Right != nil {
-                queue = append(queue, level.Right)
-            }
-        }
-        result = append(result, list)
+    queue<TreeNode*> que; 
+    que.push(root);
+    int level =0; 
+    while(que.size())
+    {
+       int iSize = que.size(); 
+       que.resize(level+1); 
+       
+       for(int i=0; i<  iSize; i++)
+       {
+          TreeNode* topNode = que.front(); 
+          que.pop(); 
+          que[level].push_back(topNode->val); 
+          
+          if(topNode->left)
+             que.push(topNode->left));
+          if(topNode->right)
+             que.push(topNode->right));    
+       } 
+       level++;              
     }
-    return result
+    return ;
 }
 ```
 
@@ -273,7 +274,7 @@ func levelOrder(root *TreeNode) [][]int {
 * 合并结果
 
 ```go
-func traversal(root *TreeNode) ResultType  {
+ traversal(root *TreeNode) ResultType  {
     // nil or leaf
     if root == nil {
         // do something and return
@@ -292,66 +293,74 @@ func traversal(root *TreeNode) ResultType  {
 
 #### 典型示例
 
-```go
+```cpp
 // V2：通过分治法遍历二叉树
-func preorderTraversal(root *TreeNode) []int {
+vector<int> postorderTraversal(root *TreeNode)  {
     result := divideAndConquer(root)
     return result
 }
-func divideAndConquer(root *TreeNode) []int {
-    result := make([]int, 0)
-    // 返回条件(null & leaf)
-    if root == nil {
-        return result
+vector<int> divideAndConquer(root *TreeNode) {
+    if (root == NULL) {
+        return {};
     }
     // 分治(Divide)
-    left := divideAndConquer(root.Left)
-    right := divideAndConquer(root.Right)
-    // 合并结果(Conquer)
-    result = append(result, root.Val)
-    result = append(result, left...)
-    result = append(result, right...)
-    return result
+    vector<int> leftVec = divideAndConquer(root.Left)
+    vector<int> rightVec = divideAndConquer(root.Right)
+    vector<int> result; 
+    result.push_back(root.Val);
+    result.insert(result.end(), leftVec.begin(), leftVec.end());
+    result.insert(result.end(), rightVec.begin(), rightVec.end());
+    return result;
 }
 ```
 
-#### 归并排序 &#x20;
+#### 归并排序: 使用Bottom up方法&#x20;
 
-```go
-func MergeSort(nums []int) []int {
-    return mergeSort(nums)
+```cpp
+void MergeSort(vector<int>& nums) 
+{
+    return mergeSort(nums, 0, nums.size()-1); 
 }
-func mergeSort(nums []int) []int {
-    if len(nums) <= 1 {
-        return nums
-    }
-    // 分治法：divide 分为两段
-    mid := len(nums) / 2
-    left := mergeSort(nums[:mid])
-    right := mergeSort(nums[mid:])
-    // 合并两段数据
-    result := merge(left, right)
+void mergeSort(vector<int>& nums, int left, int right)  
+{
+    if(left>=right)
+       return ; 
+    int middle = left + (right - left)/2 ; 
+    mergeSort(nums, left, middle);
+    mergeSort(nums, middle+1, right);
+
+    merge(nums, left, middle, right); 
     return result
 }
-func merge(left, right []int) (result []int) {
-    // 两边数组合并游标
-    l := 0
-    r := 0
-    // 注意不能越界
-    for l < len(left) && r < len(right) {
-        // 谁小合并谁
-        if left[l] > right[r] {
-            result = append(result, right[r])
-            r++
-        } else {
-            result = append(result, left[l])
-            l++
-        }
-    }
-    // 剩余部分合并
-    result = append(result, left[l:]...)
-    result = append(result, right[r:]...)
-    return
+// use two pointer in place. 
+void merge(vecotr<int>& nums, int left, int middle, int right) 
+{
+   int left1  = left; 
+   int right1 = middle; 
+   int left2 = middle+1; 
+   int right2 = right; 
+   
+   while(left1<=right1 && left2<=right2)
+   {
+       if(nums[left1] <=nums[left2])
+       {
+           left++; 
+       }
+       else
+       {
+           // switch. 
+           int tmp = num[left2]; 
+           // move right one step. 
+           for(int i= left2; i>left1; i--)
+           {
+              num[i] = num[i-1];  
+           }
+           num[left1] = tmp; 
+           left1++;
+           right1++;  
+           left2++; 
+       } 
+    }    
 }
 ```
 
@@ -359,43 +368,56 @@ func merge(left, right []int) (result []int) {
 
 > 递归需要返回结果用于合并
 
-#### 快速排序 &#x20;
+#### 快速排序 ：
 
-```go
-func QuickSort(nums []int) []int {
+* 使用top down 方法
+* 该方法需要使用随机选择交换主元。否则最差情况O(n^2)，平均为O(nlogn)
+* 该方法也可用来找到最大的第n个元素
+
+```cpp
+void QuickSort(vector<int>& nums){
 	// 思路：把一个数组分为左右两段，左段小于右段，类似分治法没有合并过程
-	quickSort(nums, 0, len(nums)-1)
+	quickSort(nums, 0, nums,size()); 
 	return nums
 
 }
 // 原地交换，所以传入交换索引
-func quickSort(nums []int, start, end int) {
-	if start < end {
-        // 分治法：divide
-		pivot := partition(nums, start, end)
-		quickSort(nums, 0, pivot-1)
-		quickSort(nums, pivot+1, end)
-	}
+void quickSort(vector<int>& nums, int left, int right) 
+{
+	if(left>=right)
+	    return; 
+	// choose random as pivot.  If not. worst case is O(n^2)
+	int pivot = rand()%(right-left+1)+left; 
+	//  
+	swap(nums[pivot], nums[left]); 
+	int middle = partition(nums, start, end)
+	quickSort(nums, left, middle-1)
+	quickSort(nums, middle+1, right);
 }
-// 分区
-func partition(nums []int, start, end int) int {
-	p := nums[end]
-	i := start
-	for j := start; j < end; j++ {
-		if nums[j] < p {
-			swap(nums, i, j)
-			i++
-		}
-	}
-    // 把中间的值换为用于比较的基准值
-	swap(nums, i, end)
-	return i
+// partition.  use pivot and split left side and right. 
+//  pivot is put into middle place. left side < pivot. 
+//                            right side >= pivot. 
+int partition(vector<int>& ret, int left, int right) 
+{
+   int  pivot = ret[left]; 
+   while(left<right)
+   {
+       while(left<right && ret[right]>pivot)
+       {
+           right--; 
+       }
+       swap(ret[left],  ret[right]); 
+       while(left<right && ret[left]<=pivot)
+       {
+           left++; 
+       }
+       swap(ret[left], ret[right]);        
+   }
+   
+   ret[left] = pivot; 
+   return left; 
 }
-func swap(nums []int, i, j int) {
-	t := nums[i]
-	nums[i] = nums[j]
-	nums[j] = t
-}
+
 ```
 
 注意点：
@@ -410,23 +432,22 @@ func swap(nums []int, i, j int) {
 
 > 给定一个二叉树，找出其最大深度。
 
-思路：分治法
+思路：分治法，后序遍历，bottom up，先算处左边最大深度，再计算右边的最大深度，比较两边，返回较大一边加上1个root，返回。终止条件，root为空的情况，返回0。
 
-```go
-func maxDepth(root *TreeNode) int {
-    // 返回条件处理
-    if root == nil {
+```cpp
+int maxDepth(root *TreeNode)
+{
+   /// 终止条件
+    if (root == NULL) {
         return 0
     }
-    // divide：分左右子树分别计算
-    left := maxDepth(root.Left)
-    right := maxDepth(root.Right)
+     // 计算左边
+    int ileft  = maxDepth(root.Left); 
+    // 计算右边
+    int iright = maxDepth(root.Right); 
 
     // conquer：合并左右子树结果
-    if left > right {
-        return left + 1
-    }
-    return right + 1
+    return max(left, right) + 1;
 }
 ```
 
@@ -436,31 +457,34 @@ func maxDepth(root *TreeNode) int {
 
 > 给定一个二叉树，判断它是否是高度平衡的二叉树。
 
-思路：分治法，左边平衡 && 右边平衡 && 左右两边高度 <= 1， 因为需要返回是否平衡及高度，要么返回两个数据，要么合并两个数据， 所以用-1 表示不平衡，>0 表示树高度（二义性：一个变量有两种含义）。
+思路：分治法，后序遍历，左边平衡 && 右边平衡 && 左右两边高度 <= 1， 因为需要返回是否平衡及高度。如果某种情况是不平衡，可直接返回false。考虑三种情况，左边不平衡，右边不平衡，或者左右高度差大于1，都直接返回false，当返回true时，同时计算root的高度。本题目需要从孩子节点传入两个信息，1个为孩子是否平衡，同时还需要传入孩子节点高度。当分析递归问题时，需要考虑问题如下，需要从parent传入什么信息，需要从孩子收集什么信息。当需要parent信息，需要前序，需要孩子信息，则为后序。
 
-```go
-func isBalanced(root *TreeNode) bool {
+```cpp
+bool isBalanced(root *TreeNode) {
     if maxDepth(root) == -1 {
         return false
     }
     return true
 }
-func maxDepth(root *TreeNode) int {
-    // check
-    if root == nil {
-        return 0
-    }
-    left := maxDepth(root.Left)
-    right := maxDepth(root.Right)
 
-    // 为什么返回-1呢？（变量具有二义性）
-    if left == -1 || right == -1 || left-right > 1 || right-left > 1 {
-        return -1
+bool maxDepth(root *TreeNode, int& depth) int {
+    // check
+    if (root == NULL) {
+        depth = 0; 
+        return true; 
     }
-    if left > right {
-        return left + 1
-    }
-    return right + 1
+    int leftDepth; 
+    int rightDepth; 
+    bool bleft =  maxDepth(root->Left, leftDepth);
+    if(bleft==false)
+      return false; 
+    bool bright= maxDepth(root->Right, rightDepth);
+    if(bright == false)
+      return false; 
+    if(abs(leftDepth - rightDepth)>1) 
+       return false; 
+    depth = max(leftDepth, rightDepth) +1; 
+    return true;         
 }
 ```
 
