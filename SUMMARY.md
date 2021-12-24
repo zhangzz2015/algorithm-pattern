@@ -29,4 +29,7 @@
 
 ## 面试公司
 
-* [FaceBook](mian-shi-gong-si/facebook.md)
+* [Facebook](mian-shi-gong-si/facebook.md)
+* [Amazon](mian-shi-gong-si/amazon.md)
+* [Google](mian-shi-gong-si/google.md)
+* [Linkedin](mian-shi-gong-si/linkedin.md)
