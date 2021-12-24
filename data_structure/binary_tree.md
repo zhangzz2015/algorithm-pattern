@@ -514,9 +514,38 @@ bool maxDepth(root *TreeNode, int& depth) int {
 
 > 一般工程中，结果通过两个变量来返回，不建议用一个变量表示两种含义
 
+#### 100. Same Tree
+
+[Same-Tree](https://leetcode.com/problems/same-tree/)
+
+思路：左子树相同，右子树相同，root相同，才是相同的数，考虑分治，后序遍历
+
+```cpp
+// 
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        
+        if(p==NULL && q == NULL) //  both empty is same. 
+            return true; 
+        if(p==NULL || q==NULL)   // one is empty other is not. false. 
+            return false; 
+        if(p->val!=q->val)
+            return false; 
+        
+        if(isSameTree(p->left, q->left)==false)
+            return false; 
+        if(isSameTree(p->right, q->right) == false)
+            return false;
+        
+        return true; 
+    }   
+};
+```
+
 #### 124. binary-tree-maximum-path-sum
 
-[binary-tree-maximum-path-sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
+[binary-tree-maximum-path-sum](https://leetcode.com/problems/same-tree/)
 
 > 给定一个**非空**二叉树，返回其最大路径和。
 
