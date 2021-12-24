@@ -11,7 +11,7 @@
 
 * [栈和队列](data\_structure/stack\_queue.md)
 * [链表](data\_structure/linked\_list.md)
-* [二叉树](data\_structure/binary\_tree.md)
+* [二叉树和递归](data\_structure/binary\_tree.md)
 * [二进制](data\_structure/binary\_op.md)
 
 ## 基础算法篇
