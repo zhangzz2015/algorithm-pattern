@@ -547,6 +547,146 @@ public:
 };
 ```
 
+#### 129. Sum Root to Leaf Numbers
+
+[Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+
+思路：可采用前序遍历方法，记录到当前节点的父节点的prevNum。则当前curNum = prevNum\*10 + currentNode->val。然后传入下一层节点，当节点没有左右节点则表明为leaf节点，加到返回值。
+
+```cpp
+// Some code
+class Solution {
+public:
+    int sumNumbers(TreeNode* root) {
+         
+        int ret =0; 
+        dfs(root, 0, ret); 
+        return ret; 
+    }
+    
+    void dfs(TreeNode* root, int val, int& ret)
+    {
+        if(root==NULL)
+            return; 
+        int currentVal = val*10 + root->val; 
+        if(root->left == NULL && root->right==NULL)
+        {
+             ret += (currentVal);
+             return ; 
+        }
+        
+        dfs(root->left, currentVal, ret); 
+        dfs(root->right, currentVal, ret); 
+    }
+};
+```
+
+#### 513. Find Bottom Left Tree Value&#x20;
+
+[Find Bottom Left Tree Value](https://leetcode.com/problems/find-bottom-left-tree-value/)
+
+思路：可使用BFS，也可使用DFS的前序遍历，利用vector记录每一层的最左边的元素，同时传入level信息，当level == 数组的大小，则表明进入一个新的层的最左边的元素，放入数组。
+
+```cpp
+// Some code
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        
+        vector<int> ret; 
+        dfs(root, 0, ret); 
+        return ret.back(); 
+        
+    }
+    
+    void dfs(TreeNode* root, int level, vector<int>& ret)
+    {
+        if(root==NULL)
+            return; 
+        
+        if(level==ret.size())
+        {
+            ret.push_back(root->val); 
+        }
+        
+        dfs(root->left, level+1, ret);
+        dfs(root->right, level+1, ret); 
+    }
+};
+```
+
+#### 297. Serialize and Deserialize Binary Tree
+
+[Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
+
+思路：关键在于如何反序列化，生成二叉数，当递归生成树，需要知道什么时候到底树的底部，从左边切换到右边，可把空的节点用‘#’标记，一个节点结束用‘，’，使用前序生成string，然后使用前序来模拟树的遍历过程，要注意数还有负号的问题。时间复杂度为O(n)，空间复杂度为O(n)
+
+```cpp
+// Some code
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string ret; 
+        dfsToString(root, ret);
+        return ret; 
+    }
+    
+    void dfsToString(TreeNode* root, string& s)
+    {
+        if(root==NULL)
+        {
+            s.push_back('#');
+            s.push_back(',');
+            return; 
+        }
+        s+= to_string(root->val); 
+        s.push_back(','); 
+        dfsToString(root->left, s); 
+        dfsToString(root->right, s);
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        
+        int left =0; 
+        return dfsToTree(data, left); 
+    }
+    
+    TreeNode* dfsToTree(string& s, int& left)
+    {
+        if(left >= s.size())
+            return NULL; 
+        if(s[left] == '#')
+        {
+            left++;
+            left++; 
+            return NULL; 
+        }
+        int num =0;
+        bool pos=true; 
+        if(s[left]=='-')
+        {
+            pos=false; 
+            left++; 
+        }
+        while(s[left]!=',')
+        {
+            num = num*10 + (s[left]-'0'); 
+            left++;
+        }
+        if(pos==false)
+            num = -num; 
+        left++;        
+        TreeNode* current = new TreeNode(num); 
+        current->left = dfsToTree(s, left); 
+        current->right = dfsToTree(s, left); 
+        return current; 
+    }
+};
+```
+
 #### 124. binary-tree-maximum-path-sum
 
 [binary-tree-maximum-path-sum](https://leetcode.com/problems/same-tree/)
