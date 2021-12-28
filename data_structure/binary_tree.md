@@ -687,6 +687,48 @@ public:
 };
 ```
 
+#### 987. Vertical Order Traversal of a Binary Tree
+
+[Vertical Order Traversal of a Binary Tree](https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/)
+
+关键是度相同的row col 需要对数字进行排序，利用map 记录不同的row 和 col，同时对row col 进行排序，最后对相同的row 和col 使用multiset 来存储进行排序。使用dfs前序遍历，传入row 和col。完成数据后再转化为输出的结构。时间复杂度为O(nklogk)，k为平均相同row 和col 的num。时间复杂度为O(n)，需要使用hash map记录所有的num。
+
+```cpp
+// Some code
+class Solution {
+public:
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        
+        map<int, map<int, multiset<int>>> record;
+        
+        dfs(root, 0, 0, record); 
+        
+        vector<vector<int>> ret(record.size());
+        int count=0; 
+        for(auto it = record.begin(); it!= record.end(); it++)
+        {
+            for(auto it2 = (*it).second.begin(); it2 !=(*it).second.end(); it2++)
+            {
+               for(auto it3 = (*it2).second.begin(); it3!=(*it2).second.end(); it3++) 
+                  ret[count].push_back((*it3)); 
+            }
+            count++; 
+        }
+        return ret;
+    }
+    
+    void dfs(TreeNode* root, int row, int col, map<int, map<int, multiset<int>>>& record)
+    {
+        if(root==NULL)
+            return; 
+        
+        record[col][row].insert(root->val); 
+        dfs(root->left, row+1, col-1, record); 
+        dfs(root->right, row+1, col+1, record); 
+    }
+};c
+```
+
 #### 124. binary-tree-maximum-path-sum
 
 [binary-tree-maximum-path-sum](https://leetcode.com/problems/same-tree/)
