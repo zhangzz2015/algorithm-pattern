@@ -615,6 +615,48 @@ public:
 };
 ```
 
+#### 116. Populating Next Right Pointers in Each Node&#x20;
+
+[Populating Next Right Pointers in Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
+
+思路：记录每一层前一个节点，前一个节点的next 就是当前同层的节点。和前面的方法相同利用vector\<Node\*>记录每一个层遍历过的最后的一个节点。使用前序遍历方法。时间复杂度为O(n)，空间复杂度为O(n)。
+
+```cpp
+// Some code
+class Solution {
+public:
+    Node* connect(Node* root) {
+        
+        if(root==NULL)
+            return NULL; 
+        
+        vector<Node*> record; 
+        dfs(root, record, 0); 
+        return root; 
+    }
+    
+    
+    void dfs(Node* root, vector<Node*> & record, int level)
+    {
+        if(root == NULL)
+            return; 
+        
+        if(level>= record.size())
+        {
+            record.resize(level+1,NULL); 
+        }
+        if(record[level]!=NULL)
+        {
+            record[level]->next = root; 
+        }
+        record[level] = root; 
+        
+        dfs(root->left, record, level+1); 
+        dfs(root->right, record, level+1); 
+    }
+};
+```
+
 #### 297. Serialize and Deserialize Binary Tree
 
 [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
