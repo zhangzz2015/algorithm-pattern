@@ -59,4 +59,31 @@ int maxTeam(vector<int>& skill, int max_diff, int teamsize)
 }
 ```
 
-####
+**Valid string**
+
+There are 3 rules for a valid string:
+
+1. An empty string is valid
+2. You can add same character to a valid string X, and create another valid string yXy
+3. You can concatenate two valid strings X and Y, so XY will also be valid.
+4. Ex: vv, xbbx, bbccdd, xyffyxdd are all valid.
+
+```
+// Some code use stack. 
+bool isValid(string s) 
+{
+   vector<char> stack; 
+   for(int i=0; i < s.size(); i++) {
+     
+     if(stack.size() && s[i] == stack.back())
+     {
+        stack.pop_back(); 
+     }
+     else
+        stack.push_back(s[i]);       
+   }
+   
+   return stack.empty(); 
+}
+
+```
