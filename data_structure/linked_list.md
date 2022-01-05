@@ -552,6 +552,55 @@ func copyRandomList(head *Node) *Node {
 }
 ```
 
+### [Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)
+
+思路：使用堆进行k 路合并。
+
+```cpp
+// Some code
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        auto comp = [](ListNode* node1, ListNode* node2)
+        {
+           return node1->val > node2->val;  
+        }; 
+        priority_queue<ListNode*, vector<ListNode*>, decltype(comp)> pq(comp); 
+        
+        for(int i=0; i< lists.size(); i++)
+        {
+            if(lists[i])
+               pq.push(lists[i]); 
+        }
+        
+        ListNode* head = NULL; 
+        ListNode* prev = NULL; 
+        ListNode* current = NULL; 
+        while(pq.size())
+        {
+            if(head==NULL)
+            {
+                head = pq.top(); 
+            }
+            current = pq.top(); 
+            pq.pop();
+            
+            if(current->next)
+               pq.push(current->next); 
+            
+            if(prev)
+            {
+                prev->next = current; 
+            }
+            prev = current;             
+        }
+        
+        return head; 
+        
+    }
+};
+```
+
 ## 总结
 
 链表必须要掌握的一些点，通过下面练习题，基本大部分的链表类的题目都是手到擒来\~
