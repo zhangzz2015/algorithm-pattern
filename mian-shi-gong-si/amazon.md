@@ -26,8 +26,37 @@ int passwdStrengh(string s)
 }
 ```
 
-#### **aaa**&#x20;
+#### maximum teams amazon ****&#x20;
 
-****
+Q1 was about given an Array of numbers, for example {5, 1, 2, 1, 4, 5} which represent skills of employees..(Skills\[i]) How many teams you can form, given the Teamsize = 3 and MaxDiff = 2 which is the maximum difference allowed in skills&#x20;
+
+Example 1 = With {5, 1, 2, 1, 4, 5} and given Teamsize = 3 and MaxDiff = 2. You can form _**2 teams**_ \[2, 1, 1] and \[4, 5, 5].\
+Example 2 : 0 teams can be formed with \[9, 3, 5, 7, 1] and int teamSize = 2; int maxDiff = 1
+
+```
+// Some code
+// first sort it. 
+int maxTeam(vector<int>& skill, int max_diff, int teamsize)
+{
+     int left =0; 
+     int right = teamsize-1; 
+     int ret =0; 
+     while(right<skill.size())
+     {
+          if(skill[right] - skill[left] <=max_diff)
+          {
+             ret++; 
+             left+=teamSize; 
+             right+=teamSize; 
+          }
+          else
+          {
+           left++;
+           right++; 
+          }          
+     }
+     return ret; 
+}
+```
 
 ####
