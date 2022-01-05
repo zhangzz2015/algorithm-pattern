@@ -16,6 +16,34 @@
 
 ## 常见题型
 
+### [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/)
+
+思路：使用快慢指针
+
+```cpp
+// Some code
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        if(head == NULL || head->next == NULL)
+            return head; 
+        
+        
+        ListNode* fast = head; 
+        ListNode* slow = head; 
+        
+        while(fast && fast->next)
+        {
+            fast = fast->next->next; 
+            slow = slow->next; 
+        }
+        
+        return slow; 
+        
+    }
+};
+```
+
 ### [remove-duplicates-from-sorted-list](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/)
 
 > 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。
