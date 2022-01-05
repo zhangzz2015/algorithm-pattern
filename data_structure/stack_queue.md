@@ -12,7 +12,7 @@
 
 ## Stack 栈
 
-[min-stack](https://leetcode-cn.com/problems/min-stack/)
+[min-stack](https://leetcode.com/problems/min-stack/)
 
 > 设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。
 

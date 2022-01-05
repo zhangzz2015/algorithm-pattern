@@ -13,6 +13,7 @@
 * [链表](data\_structure/linked\_list.md)
 * [二叉树和递归](data\_structure/binary\_tree.md)
 * [二进制](data\_structure/binary\_op.md)
+* [图](shu-ju-jie-gou-pian/tu.md)
 
 ## 基础算法篇
 
@@ -31,5 +32,7 @@
 
 * [Facebook](mian-shi-gong-si/facebook.md)
 * [Amazon](mian-shi-gong-si/amazon.md)
+* [Amazon](mian-shi-gong-si/amazon-1.md)
 * [Google](mian-shi-gong-si/google.md)
+* [Google](mian-shi-gong-si/google-1.md)
 * [Linkedin](mian-shi-gong-si/linkedin.md)
