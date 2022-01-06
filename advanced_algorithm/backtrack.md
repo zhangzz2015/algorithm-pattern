@@ -102,7 +102,7 @@ func backtrack(nums []int, pos int, list []int, result *[][]int) {
 
 ### [permutations](https://leetcode-cn.com/problems/permutations/)
 
-> 给定一个   没有重复   数字的序列，返回其所有可能的全排列。
+> 给定一个   没有重复   数字的序列，返回其所有可能的全排列。
 
 思路：需要记录已经选择过的元素，满足条件的结果才进行返回
 
@@ -194,15 +194,15 @@ func backtrack(nums []int, visited []bool, list []int, result *[][]int) {
 
 ## 练习
 
-- [ ] [subsets](https://leetcode-cn.com/problems/subsets/)
-- [ ] [subsets-ii](https://leetcode-cn.com/problems/subsets-ii/)
-- [ ] [permutations](https://leetcode-cn.com/problems/permutations/)
-- [ ] [permutations-ii](https://leetcode-cn.com/problems/permutations-ii/)
+* [ ] [subsets](https://leetcode-cn.com/problems/subsets/)
+* [ ] [subsets-ii](https://leetcode-cn.com/problems/subsets-ii/)
+* [ ] [permutations](https://leetcode-cn.com/problems/permutations/)
+* [ ] [permutations-ii](https://leetcode-cn.com/problems/permutations-ii/)
 
 挑战题目
 
-- [ ] [combination-sum](https://leetcode-cn.com/problems/combination-sum/)
-- [ ] [letter-combinations-of-a-phone-number](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)
-- [ ] [palindrome-partitioning](https://leetcode-cn.com/problems/palindrome-partitioning/)
-- [ ] [restore-ip-addresses](https://leetcode-cn.com/problems/restore-ip-addresses/)
-- [ ] [permutations](https://leetcode-cn.com/problems/permutations/)
+* [ ] [combination-sum](https://leetcode-cn.com/problems/combination-sum/)
+* [ ] [letter-combinations-of-a-phone-number](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)
+* [ ] [palindrome-partitioning](https://leetcode-cn.com/problems/palindrome-partitioning/)
+* [ ] [restore-ip-addresses](https://leetcode-cn.com/problems/restore-ip-addresses/)
+* [ ] [permutations](https://leetcode-cn.com/problems/permutations/)
