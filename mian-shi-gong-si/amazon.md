@@ -20,6 +20,7 @@ int passwdStrengh(string s)
      {
         int index = s[i]-'a';
         cur += (i - pos[index]);
+        pos[index] = i; 
         res += cur; 
      }
      return res; 
