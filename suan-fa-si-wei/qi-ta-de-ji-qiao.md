@@ -1,4 +1,4 @@
-# Other tricks
+# 其他的技巧
 
 [48. Rotate Image](https://leetcode.com/problems/rotate-image/)
 
@@ -77,3 +77,128 @@ public:
     }
 };
 ```
+
+[48. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)
+
+记录四个边界点，left right top bot。总过有四个方向操作，第一个方向为从左到右，第二个方向从上到下，第三个方向为从右到左，第四个方向从下到上。
+
+```cpp
+// Some code
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        
+        int left =0; 
+        int right = matrix[0].size()-1; 
+        int top = 0;
+        int down = matrix.size()-1; 
+        
+        vector<int> ret; 
+        int direction = 0; // 0 from left to right 1 from top to down, 2 from right to left, 3 from down to top. 
+        while(left<=right && top <= down)
+        {
+            if(direction ==0)
+            {
+               for(int i=left; i<=right; i++)
+                   ret.push_back(matrix[top][i]); 
+                top++; 
+                direction =1; 
+            }
+            else if(direction ==1)
+            {
+                for(int i=top; i<=down; i++)
+                    ret.push_back(matrix[i][right]); 
+                right--; 
+                direction = 2; 
+                
+            }
+            else if(direction ==2)
+            {
+                for(int i=right; i>=left; i--)
+                    ret.push_back(matrix[down][i]); 
+                
+                down--; 
+                direction = 3; 
+            }
+            else
+            {
+               for(int i=down; i>=top; i--)
+                   ret.push_back(matrix[i][left]); 
+                left++; 
+                direction = 0; 
+            }                        
+        }        
+        return ret;                      
+    }
+};
+```
+
+[59 Spiral Matrix II ](https://leetcode.com/problems/spiral-matrix-ii/)
+
+使用相同的方法和Spiral Matrix.&#x20;
+
+```cpp
+// Some code
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        
+        vector<vector<int>> ret(n, vector<int>(n)); 
+        
+        int left = 0; 
+        int right = n-1; 
+        int top = 0; 
+        int down = n-1; 
+        int direction =0; 
+        int count =0; 
+        while(left<=right && top <= down)
+        {
+            if(direction==0)
+            {
+                for(int i=left ; i<=right; i++)
+                {
+                    count++;                                         
+                    ret[top][i] = count; 
+                }
+                direction++; 
+                top++; 
+            }
+            else if(direction ==1)
+            {
+                for(int i = top ; i<=down; i++)
+                {
+                    count++;                                         
+                    ret[i][right] = count; 
+                }
+                direction ++; 
+                right--;             
+            }
+            else if(direction ==2)
+            {
+                for(int i= right; i>=left; i--)
+                {
+                    count++; 
+                    ret[down][i] = count; 
+                }
+                direction++; 
+                down--; 
+            }
+            else if(direction==3)
+            {
+                for(int i= down; i>=top ; i--)
+                {
+                    count++; 
+                    ret[i][left] = count; 
+                }
+                direction =0; 
+                left++; 
+            }                        
+        }
+        
+        return ret; 
+        
+    }
+};
+```
+
+###
