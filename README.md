@@ -65,16 +65,6 @@
 
 1、 [algorithm-pattern 练习题](https://greyireland.gitbook.io/algorithm-pattern/)
 
-![练习题](https://img.fuiboom.com/img/repo_practice.png)
-
-2、 [LeetCode 卡片](https://leetcode-cn.com/explore/)
-
-![探索卡片](https://img.fuiboom.com/img/leetcode_explore.png)
-
-3、 [剑指 offer](https://leetcode-cn.com/problemset/lcof/)
-
-![剑指offer](https://img.fuiboom.com/img/leetcode_jzoffer.png)
-
 刷题时间可以合理分配，如果打算准备面试了，建议前面两部分 一个半月 （6 周）时间刷完，最后剑指 offer 半个月刷完，边刷可以边投简历进行面试，遇到不会的不用着急，往模板上套就对了，如果面试管给你提示，那就好好做，不要错过这大好机会~
 
 > 注意点：如果为了找工作刷题，遇到 hard 的题如果有思路就做，没思路先跳过，先把基础打好，再来刷 hard 可能效果会更好~
@@ -89,19 +79,6 @@
 
 持续更新中，觉得还可以的话点个 **star** 收藏呀 ⭐️~
 
-【 Github 】[https://github.com/greyireland/algorithm-pattern](https://github.com/greyireland/algorithm-pattern) ⭐️
+【 Github 】[https://github.com/zhangzz2015/algorithm-pattern](https://github.com/zhangzz2015/algorithm-pattern) ⭐
 
-## 完成打卡
-
-完成计划之后，可以提交 Pull requests，在下面添加自己的项目仓库，完成自己的算法模板打卡呀~
-
-| 完成 | 用户                                              | 项目地址                                                            |
-| ---- | ------------------------------------------------- | ------------------------------------------------------------------- |
-| ✅   | [easyui](https://github.com/easyui/) | [algorithm-pattern-swift(Swift 实现)](https://github.com/easyui/algorithm-pattern-swift),[在线文档 Gitbook](https://zyj.gitbook.io/algorithm-pattern-swift/) |
-| ✅   | [wardseptember](https://github.com/wardseptember) | [notes(Java 实现)](https://github.com/wardseptember/notes)          |
-| ✅   | [dashidhy](https://github.com/dashidhy) | [algorithm-pattern-python(Python 实现)](https://github.com/dashidhy/algorithm-pattern-python) |
-| ✅   | [binzi56](https://github.com/binzi56) | [algorithm-pattern-c(c++ 实现)](https://github.com/binzi56/algorithm-pattern-c) |
-| ✅   | [lvseouren](https://github.com/lvseouren) | [algorithm-study-record(c++ 实现)](https://github.com/lvseouren/algorithm-study-record) |
-| ✅   | [chienmy](https://github.com/chienmy) | [algorithm-pattern-java(Java 实现)](https://github.com/chienmy/algorithm-pattern-java), [在线文档 Gitbook](https://chienmy.gitbook.io/algorithm-pattern-java/) |
-| ✅ | [ligecarryme](https://github.com/ligecarryme) | [algorithm-pattern-JavaScript(JS+TS实现)](https://github.com/ligecarryme/algorithm-pattern-JavaScript) |
 
