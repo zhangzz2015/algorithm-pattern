@@ -242,6 +242,57 @@ func max(a,b int)int{
 }
 ```
 
+[76 Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)
+
+思路：使用标准sliding window，利用hash map，记录是否包含所有S1的字符，先移动right，找到一个可行解，再移动left，看该可行解可以保持多久，同时找到最小的可行解。
+
+```cpp
+// Some code
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        
+        if(t.size()> s.size())
+            return ""; 
+        vector<int> t_map(256, 0); 
+        vector<int> s_map(256, 0); 
+        for(int i=0; i< t.size(); i++)
+            t_map[t[i]]++; 
+        int left =0; 
+        int right = 0; 
+        int count =0;
+        int ret = INT_MAX; 
+        int ret_start = -1; 
+        while(right < s.size()){
+            
+            s_map[s[right]]++;
+            if(s_map[s[right]] <= t_map[s[right]])
+                count++; 
+            
+            while(count==t.size())
+            {
+               if(right - left + 1 < ret)
+               {
+                  ret = right - left+1; 
+                  ret_start = left;  
+               }
+               s_map[s[left]]--; 
+               if(s_map[s[left]]< t_map[s[left]])
+                   count--; 
+                left++; 
+            }
+            
+            right++; 
+        }
+        
+        return ret == INT_MAX? "" : s.substr(ret_start, ret);                         
+    }
+};
+
+```
+
+
+
 ## 总结
 
 * 和双指针题目类似，更像双指针的升级版，滑动窗口核心点是维护一个窗口集，根据窗口集来进行处理
