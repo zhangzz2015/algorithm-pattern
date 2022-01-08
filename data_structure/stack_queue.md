@@ -10,6 +10,8 @@
 
 队列一般常用于 BFS 广度搜索，类似一层一层的搜索
 
+栈的应用：包括匹配问题，例如括号匹配，表达式计算等。还可结合单调栈。
+
 ## Stack 栈
 
 [min-stack](https://leetcode.com/problems/min-stack/)
