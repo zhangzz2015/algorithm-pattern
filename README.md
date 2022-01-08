@@ -1,6 +1,5 @@
 # 算法模板
 
-![来刷题了](https://img.fuiboom.com/img/title.png)
 
 算法模板，最科学的刷题方式，最快速的刷题路径，一个月从入门到 offer，你值得拥有 🐶~
 
