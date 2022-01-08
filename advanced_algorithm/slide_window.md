@@ -146,48 +146,55 @@ public:
 };
 ```
 
-[find-all-anagrams-in-a-string](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/)
+[438 Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/)
 
 > 给定一个字符串  \*\*s \*\*和一个非空字符串  **p**，找到  \*\*s \*\*中所有是  \*\*p \*\*的字母异位词的子串，返回这些子串的起始索引。
 
 ```go
-func findAnagrams(s string, p string) []int {
-    win := make(map[byte]int)
-	need := make(map[byte]int)
-	for i := 0; i < len(p); i++ {
-		need[p[i]]++
-	}
-	left := 0
-	right := 0
-	match := 0
-    ans:=make([]int,0)
-	for right < len(s) {
-		c := s[right]
-		right++
-		if need[c] != 0 {
-			win[c]++
-			if win[c] == need[c] {
-				match++
-			}
-		}
-		// 当窗口长度大于字符串长度，缩紧窗口
-		for right-left >= len(p) {
-			// 当窗口长度和字符串匹配，并且里面每个字符数量也匹配时，满足条件
-			if right-left == len(p)&& match == len(need) {
-				ans=append(ans,left)
-			}
-			d := s[left]
-			left++
-			if need[d] != 0 {
-				if win[d] == need[d] {
-					match--
-				}
-				win[d]--
-			}
-		}
-	}
-	return ans
-}
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        
+        // use fix size sliding windows. 
+        
+        vector<int> s_map(26,0); 
+        vector<int> p_map(26,0); 
+        if(s.size()<p.size())
+            return {};
+        
+        vector<int> ret; 
+        
+        int count=0; 
+        for(int i=0; i< p.size(); i++)
+           p_map[p[i]-'a']++; 
+        
+        for(int i=0; i< p.size(); i++)
+        {
+            int index = s[i]-'a';
+            s_map[index]++; 
+            if(s_map[index] <=p_map[index])
+                count++;             
+        }
+        if(count == p.size())
+            ret.push_back(0); 
+        
+        for(int i=p.size(); i<s.size(); i++)
+        {
+            int index = s[i]-'a'; 
+            s_map[index]++; 
+            if(s_map[index] <=p_map[index])
+                count++;             
+            index = s[i-p.size()]-'a'; 
+            s_map[index]--; 
+            if(s_map[index]< p_map[index])
+                count--; 
+            if(count==p.size())
+                ret.push_back(i-p.size()+1); 
+        }
+        
+        return ret;                 
+    }
+};
 ```
 
 [longest-substring-without-repeating-characters](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
