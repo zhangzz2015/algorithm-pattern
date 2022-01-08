@@ -110,6 +110,8 @@ func minWindow(s string, t string) string {
 [permutation-in-string](https://leetcode-cn.com/problems/permutation-in-string/)
 
 > 给定两个字符串  **s1**  和  **s2**，写一个函数来判断  **s2**  是否包含  \*\*s1 \*\*的排列。
+>
+> 思路：使用和S1固定大小的窗口，在该窗口大小内，生成hash map是否相同，来判断是否是一个排列。利用count来判断两个hash map是否相同。
 
 ```go
 class Solution {
