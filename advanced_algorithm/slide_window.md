@@ -203,37 +203,36 @@ public:
 >
 > 输入: "abcabcbb" 输出: 3 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
 
+思路：利用hashmap来维护是否右重复字符。当有重复字符时候，缩小窗口，直到没有重复为止，则表明\[left, right]为一个没有重复字符的字符串。
+
 ```go
-func lengthOfLongestSubstring(s string) int {
-    // 滑动窗口核心点：1、右指针右移 2、根据题意收缩窗口 3、左指针右移更新窗口 4、根据题意计算结果
-    if len(s)==0{
-        return 0
-    }
-    win:=make(map[byte]int)
-    left:=0
-    right:=0
-    ans:=1
-    for right<len(s){
-        c:=s[right]
-        right++
-        win[c]++
-        // 缩小窗口
-        for win[c]>1{
-            d:=s[left]
-            left++
-            win[d]--
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        
+        vector<int> record(256, 0); 
+        
+        int left =0; 
+        int right =0; 
+        int ret =0; 
+        while(right < s.size())
+        {
+            record[s[right]]++; 
+            while(record[s[right]]>1 )
+            {
+                record[s[left]]--; 
+                left++; 
+            }
+            
+            ret = max(ret, (right - left+1)); 
+            
+            right++; 
         }
-        // 计算结果
-        ans=max(right-left,ans)
+        
+        return ret; 
+        
     }
-    return ans
-}
-func max(a,b int)int{
-    if a>b{
-        return a
-    }
-    return b
-}
+};
 ```
 
 
