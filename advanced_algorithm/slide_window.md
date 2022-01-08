@@ -112,42 +112,49 @@ func minWindow(s string, t string) string {
 > 给定两个字符串  **s1**  和  **s2**，写一个函数来判断  **s2**  是否包含  \*\*s1 \*\*的排列。
 
 ```go
-func checkInclusion(s1 string, s2 string) bool {
-	win := make(map[byte]int)
-	need := make(map[byte]int)
-	for i := 0; i < len(s1); i++ {
-		need[s1[i]]++
-	}
-	left := 0
-	right := 0
-	match := 0
-	for right < len(s2) {
-		c := s2[right]
-		right++
-		if need[c] != 0 {
-			win[c]++
-			if win[c] == need[c] {
-				match++
-			}
-		}
-		// 当窗口长度大于字符串长度，缩紧窗口
-		for right-left >= len(s1) {
-			// 当窗口长度和字符串匹配，并且里面每个字符数量也匹配时，满足条件
-			if match == len(need) {
-				return true
-			}
-			d := s2[left]
-			left++
-			if need[d] != 0 {
-				if win[d] == need[d] {
-					match--
-				}
-				win[d]--
-			}
-		}
-	}
-	return false
-}
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        
+        if(s1.size()>s2.size())
+            return false; 
+        
+        vector<int> s1_map(26, 0); 
+        vector<int> s2_map(26, 0); 
+        
+        for(int i=0; i< s1.size(); i++)
+            s1_map[s1[i]-'a']++; 
+        
+        int count =0; 
+        for(int i=0; i< s1.size(); i++)
+        {
+            int index = s2[i] - 'a'; 
+            s2_map[index]++; 
+            if(s2_map[index]<=s1_map[index])
+                count++; 
+        }
+        if(count == s1.size())
+            return true; 
+        
+        for(int i= s1.size(); i< s2.size(); i++)
+        {
+            int index = s2[i] - 'a'; 
+            s2_map[index]++; 
+            if(s2_map[index]<=s1_map[index])
+                count++; 
+            index = s2[i-s1.size()] - 'a'; 
+            s2_map[index]--; 
+            if(s2_map[index]<s1_map[index])
+                count--; 
+            
+            if(count == s1.size())
+                return true;             
+        }
+        
+        return false; 
+        
+    }
+};
 ```
 
 [find-all-anagrams-in-a-string](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/)
