@@ -6,10 +6,12 @@
 
 模板四点要素
 
-* 1、初始化：start=0、end=len-1
-* 2、循环退出条件：start + 1 < end
+* 1、初始化：left=0,  right=leng-1  尽量总是使用相同左闭右闭区间。
+* 2、循环退出条件：left <= right &#x20;
 * 3、比较中点和目标值：A\[mid] ==、 <、> target
 * 4、判断最后两个元素是否符合：A\[start]、A\[end] ? target
+* 5、要么在找到情况下返回，最后退出条件一定是right\<left，并且right和left一定是相邻，同时小于等于right是某一种情况，大于等于left是另外一种情况，找到的地方正好是发生转变的地方。
+* 6、在分析退出时，我们可假设left = right，然后我们就能非常容易确定应该如何处理判断条件，同时返回究竟是left还是right。
 
 时间复杂度 O(logn)，使用场景一般是有序数组的查找
 
@@ -19,68 +21,32 @@
 
 > 给定一个  n  个元素有序的（升序）整型数组  nums 和一个目标值  target  ，写一个函数搜索  nums  中的 target，如果目标值存在返回下标，否则返回 -1。
 
-```go
+```cpp
 // 二分搜索最常用模板
-func search(nums []int, target int) int {
+int search(vector<int>& nums, int target){
     // 1、初始化start、end
-    start := 0
-    end := len(nums) - 1
-    // 2、处理for循环
-    for start+1 < end {
-        mid := start + (end-start)/2
-        // 3、比较a[mid]和target值
-        if nums[mid] == target {
-            end = mid
-        } else if nums[mid] < target {
-            start = mid
-        } else if nums[mid] > target {
-            end = mid
+    int left = 0; 
+    int right = nums.size()-1; 
+    // 2、处理while循环
+    while(right<=left)
+    {
+        int middle = left + (right - left)/2; 
+        
+        if(nums[middle] == target)
+             return middle; 
+        else if(nums[middle] < target)
+        {
+            right = middle-1; 
         }
+        else
+        {
+             left = middle+1; 
+        }     
     }
-    // 4、最后剩下两个元素，手动判断
-    if nums[start] == target {
-        return start
-    }
-    if nums[end] == target {
-        return end
-    }
-    return -1
+   //  [right left] 
+    return  right or left or other situation. 
 }
 ```
-
-大部分二分查找类的题目都可以用这个模板，然后做一点特殊逻辑即可
-
-另外二分查找还有一些其他模板如下图，大部分场景模板#3 都能解决问题，而且还能找第一次/最后一次出现的位置，应用更加广泛
-
-![binary\_search\_template](https://img.fuiboom.com/img/binary\_search\_template.png)
-
-所以用模板#3 就对了，详细的对比可以这边文章介绍：[二分搜索模板](https://leetcode-cn.com/explore/learn/card/binary-search/212/template-analysis/847/)
-
-如果是最简单的二分搜索，不需要找第一个、最后一个位置、或者是没有重复元素，可以使用模板#1，代码更简洁
-
-```go
-// 无重复元素搜索时，更方便
-func search(nums []int, target int) int {
-    start := 0
-    end := len(nums) - 1
-    for start <= end {
-        mid := start + (end-start)/2
-        if nums[mid] == target {
-            return mid
-        } else if nums[mid] < target {
-            start = mid+1
-        } else if nums[mid] > target {
-            end = mid-1
-        }
-    }
-    // 如果找不到，start 是第一个大于target的索引
-    // 如果在B+树结构里面二分搜索，可以return start
-    // 这样可以继续向子节点搜索，如：node:=node.Children[start]
-    return -1
-}
-```
-
-## 常见题目
 
 ### [search-for-range](https://www.lintcode.com/problem/search-for-a-range/description)
 
