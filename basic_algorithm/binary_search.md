@@ -23,30 +23,29 @@
 > 给定一个  n  个元素有序的（升序）整型数组  nums 和一个目标值  target  ，写一个函数搜索  nums  中的 target，如果目标值存在返回下标，否则返回 -1。
 
 ```cpp
-// 二分搜索最常用模板
-int search(vector<int>& nums, int target){
-    // 1、初始化start、end
-    int left = 0; 
-    int right = nums.size()-1; 
-    // 2、处理while循环
-    while(right<=left)
-    {
-        int middle = left + (right - left)/2; 
+// 二分搜索最常用模板 每个数都是unique的。
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
         
-        if(nums[middle] == target)
-             return middle; 
-        else if(nums[middle] < target)
+        int left = 0; 
+        int right = nums.size()-1; 
+        while(left <=right )
         {
-            right = middle-1; 
+            int middle = left + (right -left)/2; 
+            
+            if(nums[middle] == target) 
+                return middle; 
+            else if(nums[middle] < target)
+                left = middle+1; 
+            else
+                right = middle-1;                             
         }
-        else
-        {
-             left = middle+1; 
-        }     
+        
+        return -1; 
+        
     }
-   //  [right left] 
-    return  right or left or other situation. 
-}
+};
 ```
 
 ### [search-for-range](https://www.lintcode.com/problem/search-for-a-range/description)
