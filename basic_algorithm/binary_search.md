@@ -12,6 +12,7 @@
 * 4、判断最后两个元素是否符合：A\[start]、A\[end] ? target
 * 5、要么在找到情况下返回，最后退出条件一定是right\<left，并且right和left一定是相邻，同时小于等于right是某一种情况，大于等于left是另外一种情况，找到的地方正好是发生转变的地方。
 * 6、在分析退出时，我们可假设left = right，然后我们就能非常容易确定应该如何处理判断条件，同时返回究竟是left还是right。
+* 当我们碰见有序或者部分有序，要考虑使用二分，或者在某一种地方发生分界。
 
 时间复杂度 O(logn)，使用场景一般是有序数组的查找
 
@@ -356,6 +357,69 @@ func search(nums []int, target int) bool {
     }
     return false
 }
+```
+
+### [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
+```cpp
+// Some code
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        
+     vector<int> ret;    
+     ret.push_back(binaryLowerBound(nums, target));
+     ret.push_back(binaryUpperBound(nums, target));
+        
+        return ret; 
+      
+        
+    }
+    // return [right left]
+    // boundary point right<target left>=target
+    int binaryLowerBound(vector<int>& nums, int target)
+    {
+        int left =0; 
+        int right = nums.size()-1; 
+        
+        while(left <=right)
+        {
+            int middle = left + (right - left)/2; 
+            
+            if(nums[middle]<target)
+                left = middle+1; 
+            else
+                right = middle-1;                             
+        }        
+        // [right left]  return.  
+        // then we return left. 
+        if(left==nums.size()|| nums[left]!=target)
+            return -1; 
+        else
+            return left;             
+    }
+    // return [right left]
+    // boundary point right<=target left>target
+    int binaryUpperBound(vector<int>& nums, int target)
+    {
+        int left =0; 
+        int right = nums.size()-1; 
+        
+        while(left <=right)
+        {
+            int middle = left + (right - left)/2;             
+            if(nums[middle]<=target)
+                left = middle+1; 
+            else
+                right = middle-1;                             
+        }        
+        // [right left]  return.  right. 
+        if(right==-1|| nums[right]!=target)
+            return -1; 
+        else
+            return right;             
+    }    
+};
 ```
 
 ## 总结
