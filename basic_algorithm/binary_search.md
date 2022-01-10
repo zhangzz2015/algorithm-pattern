@@ -115,30 +115,29 @@ func searchRange (A []int, target int) []int {
 > 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
 
 ```go
-func searchInsert(nums []int, target int) int {
-    // 思路：找到第一个 >= target 的元素位置
-    start := 0
-    end := len(nums) - 1
-    for start+1 < end {
-        mid := start + (end-start)/2
-        if nums[mid] == target {
-            // 标记开始位置
-            start = mid
-        } else if nums[mid] > target {
-            end = mid
-        } else {
-            start = mid
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        
+        int left=0; 
+        int right = nums.size()-1; 
+        
+        while(left <= right){
+            int middle = left  + (right -left)/2; 
+            
+            if(target == nums[middle])
+                return middle; 
+            else if(target < nums[middle])
+                right = middle-1; 
+            else
+                left = middle+1;                                             
         }
+        
+        // [right left] 
+        return left;         
     }
-    if nums[start] >= target {
-        return start
-    } else if nums[end] >= target {
-        return end
-    } else if nums[end] < target { // 目标值比所有值都大
-        return end + 1
-    }
-    return 0
-}
+    
+};
 ```
 
 ### [search-a-2d-matrix](https://leetcode-cn.com/problems/search-a-2d-matrix/)
@@ -149,32 +148,30 @@ func searchInsert(nums []int, target int) int {
 > * 每行的第一个整数大于前一行的最后一个整数。
 
 ```go
-func searchMatrix(matrix [][]int, target int) bool {
-    // 思路：将2纬数组转为1维数组 进行二分搜索
-    if len(matrix) == 0 || len(matrix[0]) == 0 {
-        return false
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        
+        
+    int row = matrix.size(); 
+    int col = matrix[0].size(); 
+    int left =0;     
+    int right = row*col -1;         
+    while(left <=right){
+        int middle = left + (right - left)/2; 
+        //  irow * col + icol
+        int irow = middle/col; 
+        int icol = middle%col; 
+        if(matrix[irow][icol] == target)
+            return true; 
+        else if(matrix[irow][icol] < target)
+            left = middle+1; 
+        else
+            right = middle-1;             
+    }        
+    return false;                     
     }
-    row := len(matrix)
-    col := len(matrix[0])
-    start := 0
-    end := row*col - 1
-    for start+1 < end {
-        mid := start + (end-start)/2
-        // 获取2纬数组对应值
-        val := matrix[mid/col][mid%col]
-        if val > target {
-            end = mid
-        } else if val < target {
-            start = mid
-        } else {
-            return true
-        }
-    }
-    if matrix[start/col][start%col] == target || matrix[end/col][end%col] == target{
-        return true
-    }
-    return false
-}
+};
 ```
 
 ### [first-bad-version](https://leetcode-cn.com/problems/first-bad-version/)
