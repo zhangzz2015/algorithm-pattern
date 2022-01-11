@@ -2,4 +2,4 @@
 
 ### 图的基本知识
 
-1. 图有youxiangtu
+1. 图有有向图和wuxiang
