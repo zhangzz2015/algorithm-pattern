@@ -192,6 +192,8 @@ bool dfs(vector<vector<int>>& graph, int rootNode, vector<char>& visit,  vector<
 
 #### [1203 Sort Items by Groups Respecting Dependencies](https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies/)
 
+> 使用top 排序，但是复杂在于这里有两层top排序，一层为group，一层为item。同时group因为有一些item没有分配group，需要把没有分配group分配一个新的group id。建立Group 和item 图后进行top 排序。之后再争对输出要求进行分组。
+
 ```cpp
 // Some code
 class Solution {
