@@ -657,6 +657,123 @@ public:
 };
 ```
 
+#### [114. Flatten Binary Tree to Linked List](https://leetcode.com/problems/flatten-binary-tree-to-linked-list/)
+
+思路：Flatten左边，Flatten右边，利用后序把左右两边接起来。需要返回Head和Tail。
+
+```
+// root->right = left_head 
+// left_tail ->right = right_head; 
+// root->left = NULL 
+// update head and tail. head = root. tail = right_tail.
+void dfs(TreeNode* root, TreeNode* & head, TreeNode* & tail )
+{
+    if(root == NULL)
+    {
+        head = NULL; 
+        tail = NULL; 
+        return ;
+    }
+    TreeNode* lhead=NULL; 
+    TreeNode* ltail=NULL; 
+    TreeNode* rhead=NULL; 
+    TreeNode* rtail=NULL; 
+    dfs(root->left, lhead, ltail ); 
+    dfs(root->right, rhead, rtail); 
+    
+    //  left = NULL   lhead = NULL ltail = NULL
+    //  right = NULL  rhead = NULL rtail = NULL
+    if(root->left==NULL && root->right==NULL)
+    {
+        head = root; 
+        tail = root; 
+    }
+    else if(root->left==NULL)
+    {
+        head = root; 
+        tail = rtail; 
+    }
+    else if(root->right == NULL)
+    {
+        root->right = lhead; 
+        root->left = NULL; 
+        head = root; 
+        tail = ltail; 
+    }
+    else
+    {
+        root->right = lhead; 
+        ltail->right = rhead; 
+        root->left = NULL; 
+        head = root; 
+        tail = rtail;             
+    }
+}
+```
+
+};
+
+```cpp
+// Some code
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        //   flatten left 
+        //   flatten right. 
+        //  insert left between root and right. 
+        // root ->right = left 
+        // left -> right = right.         
+        TreeNode* head; 
+        TreeNode* tail; 
+        dfs(root, head, tail); 
+    }
+    
+    void dfs(TreeNode* root, TreeNode* & head, TreeNode* & tail )
+    {
+        if(root == NULL)
+        {
+            head = NULL; 
+            tail = NULL; 
+            return ;
+        }
+        TreeNode* lhead=NULL; 
+        TreeNode* ltail=NULL; 
+        TreeNode* rhead=NULL; 
+        TreeNode* rtail=NULL; 
+        dfs(root->left, lhead, ltail ); 
+        dfs(root->right, rhead, rtail); 
+        
+        //  left = NULL   lhead = NULL ltail = NULL
+        //  right = NULL  rhead = NULL rtail = NULL
+        if(root->left==NULL && root->right==NULL)
+        {
+            head = root; 
+            tail = root; 
+        }
+        else if(root->left==NULL)
+        {
+            head = root; 
+            tail = rtail; 
+        }
+        else if(root->right == NULL)
+        {
+            root->right = lhead; 
+            root->left = NULL; 
+            head = root; 
+            tail = ltail; 
+        }
+        else
+        {
+            root->right = lhead; 
+            ltail->right = rhead; 
+            root->left = NULL; 
+            head = root; 
+            tail = rtail;             
+        }
+    }
+};
+```
+
 #### 297. Serialize and Deserialize Binary Tree
 
 [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
