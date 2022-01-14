@@ -1089,6 +1089,67 @@ func helper(root *TreeNode) ResultType {
 }
 ```
 
+####
+
+#### [Find Mode in Binary Search Tree](https://leetcode.com/problems/find-mode-in-binary-search-tree/)
+
+```cpp
+// Some code
+class Solution {
+public:
+    vector<int> findMode(TreeNode* root) {
+          
+        TreeNode* prev=NULL;
+        vector<int> ret; 
+        int max = INT_MIN; 
+        int count =0; 
+        dfs(root, prev, ret, max, count); 
+        // last one. 
+        if(count>max)
+        {
+         ret.clear(); 
+         ret.push_back(prev->val);             
+        }
+        else if(count ==max)
+          ret.push_back(prev->val);  
+            
+        return ret; 
+    }
+    
+    void dfs(TreeNode* root, TreeNode* &  prev, vector<int>& ret, int& max, int& count)
+    {
+        if(root==NULL)
+            return ;
+        
+        dfs(root->left, prev, ret, max, count);
+        
+          if(prev)
+          {
+             if(prev->val == root->val)
+                 count++; 
+             else
+             {
+                 if(count>max)
+                 {
+                     ret.clear(); 
+                     ret.push_back(prev->val); 
+                     max = count; 
+                 }
+                 else if(count == max)
+                 {
+                     ret.push_back(prev->val);
+                 }
+                 count =0; 
+             }
+          }
+          prev = root;         
+        dfs(root->right, prev, ret, max, count);                                 
+    }
+};
+```
+
+
+
 #### insert-into-a-binary-search-tree
 
 [insert-into-a-binary-search-tree](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/)
@@ -1097,7 +1158,7 @@ func helper(root *TreeNode) ResultType {
 
 思路：找到最后一个叶子节点满足插入条件即可
 
-```go
+```cpp
 // DFS查找插入位置
 func insertIntoBST(root *TreeNode, val int) *TreeNode {
     if root == nil {
@@ -1110,6 +1171,7 @@ func insertIntoBST(root *TreeNode, val int) *TreeNode {
         root.Right = insertIntoBST(root.Right, val)
     }
     return root
+
 }
 ```
 
