@@ -1093,6 +1093,8 @@ func helper(root *TreeNode) ResultType {
 
 #### [Find Mode in Binary Search Tree](https://leetcode.com/problems/find-mode-in-binary-search-tree/)
 
+> 方法：利用BST中序遍历特点，找到相同数计数。
+
 ```cpp
 // Some code
 class Solution {
