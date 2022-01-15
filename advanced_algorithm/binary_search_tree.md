@@ -7,59 +7,37 @@
 
 ## 应用
 
-[validate-binary-search-tree](https://leetcode-cn.com/problems/validate-binary-search-tree/)
+[validate-binary-search-tree](https://leetcode.com/problems/validate-binary-search-tree/)
 
 > 验证二叉搜索树
 
+思路：方法1：考虑二叉搜索树特点，可使用中序遍历，记录前一个节点，判断是否递增。方法2：可使用记录最大和最小的node来判断。
+
 ```go
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
-func isValidBST(root *TreeNode) bool {
-    return dfs(root).valid
-}
-type ResultType struct{
-    max int
-    min int
-    valid bool
-}
-func dfs(root *TreeNode)(result ResultType){
-    if root==nil{
-        result.max=-1<<63
-        result.min=1<<63-1
-        result.valid=true
-        return
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        
+        return dfs(root, NULL, NULL); 
     }
-
-    left:=dfs(root.Left)
-    right:=dfs(root.Right)
-
-    // 1、满足左边最大值<root<右边最小值 && 左右两边valid
-    if root.Val>left.max && root.Val<right.min && left.valid && right.valid {
-        result.valid=true
+    
+    bool dfs(TreeNode* root, TreeNode*  minnode, TreeNode* maxnode)
+    {
+        if(root==NULL)
+            return true; 
+        
+        if( (minnode && minnode->val >=root->val ) || (maxnode && root->val >=maxnode->val) )
+            return false; 
+        
+        if(dfs(root->left, minnode, root) ==false)
+           return false; 
+        
+        if(dfs(root->right,root, maxnode) == false)
+           return false; 
+           
+        return true;                                
     }
-    // 2、更新当前节点的最大最小值
-    result.max=Max(Max(left.max,right.max),root.Val)
-    result.min=Min(Min(left.min,right.min),root.Val)
-    return
-}
-func Max(a,b int)int{
-    if a>b{
-        return a
-    }
-    return b
-}
-func Min(a,b int)int{
-    if a>b{
-        return b
-    }
-    return a
-}
+};
 ```
 
 [insert-into-a-binary-search-tree](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/)
