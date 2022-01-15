@@ -67,17 +67,25 @@ func Min(a,b int)int{
 > 给定二叉搜索树（BST）的根节点和要插入树中的值，将值插入二叉搜索树。 返回插入后二叉搜索树的根节点。 保证原始二叉搜索树中不存在新值。
 
 ```go
-func insertIntoBST(root *TreeNode, val int) *TreeNode {
-    if root==nil{
-        return &TreeNode{Val:val}
+class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        
+        if(root==NULL)
+        {
+            TreeNode* current = new TreeNode( val); 
+            return current; ; 
+        }
+        
+        if(root->val > val)
+            root->left = insertIntoBST(root->left, val);
+        else
+            root->right = insertIntoBST(root->right, val); 
+        
+        return root; 
+        
     }
-    if root.Val<val{
-        root.Right=insertIntoBST(root.Right,val)
-    }else{
-        root.Left=insertIntoBST(root.Left,val)
-    }
-    return root
-}
+};
 ```
 
 [delete-node-in-a-bst](https://leetcode-cn.com/problems/delete-node-in-a-bst/)
