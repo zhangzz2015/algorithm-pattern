@@ -87,41 +87,69 @@ func insertIntoBST(root *TreeNode, val int) *TreeNode {
 ```go
 /**
  * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
-func deleteNode(root *TreeNode, key int) *TreeNode {
-    // 删除节点分为三种情况：
-    // 1、只有左节点 替换为右
-    // 2、只有右节点 替换为左
-    // 3、有左右子节点 左子节点连接到右边最左节点即可
-    if root ==nil{
-        return root
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        
+        
+        return dfs(root, key); 
     }
-    if root.Val<key{
-        root.Right=deleteNode(root.Right,key)
-    }else if root.Val>key{
-        root.Left=deleteNode(root.Left,key)
-    }else if root.Val==key{
-        if root.Left==nil{
-            return root.Right
-        }else if root.Right==nil{
-            return root.Left
-        }else{
-            cur:=root.Right
-            // 一直向左找到最后一个左节点即可
-            for cur.Left!=nil{
-                cur=cur.Left
+    
+    
+    TreeNode* dfs(TreeNode* root, int key)
+    {
+        if(root== NULL)
+            return NULL; 
+        
+        if(root->val == key) // remove
+        {
+            if(root->left==NULL)
+            {
+                TreeNode* ret = root->right;                 
+                delete root;                 
+                return ret;
             }
-            cur.Left=root.Left
-            return root.Right
+            if(root->right==NULL)
+            {
+                TreeNode* ret = root->left; 
+                delete root; 
+                return ret; 
+            }
+            ///  both has left and right. 
+            // find root->right most left value. 
+            TreeNode* most_left = NULL; 
+            TreeNode* current =root->right; 
+            while(current)
+            {
+                most_left = current; 
+                current = current->left; 
+            } 
+            root->val = most_left->val; 
+            root->right = dfs(root->right, root->val);             
+            return root; 
+            
         }
+        else if(root->val>key)
+        {
+          root->left=  dfs(root->left, key); 
+        }
+        else
+        {
+          root->right =  dfs(root->right, key); 
+        }
+        
+        return root; 
     }
-    return root
-}
+};
 ```
 
 [balanced-binary-tree](https://leetcode-cn.com/problems/balanced-binary-tree/)
