@@ -21,7 +21,9 @@ for(int i=0; i< n; i++)
 
 ### BFS方法
 
-#### [Open the Lock](https://leetcode.com/problems/open-the-lock/)
+#### 752. Open the Lock
+
+> 思路：转化该问题为从source到target找到最短的路径。使用BFS方法，注意visit node避免重复，另外避开deadend。
 
 ```cpp
 // Some code
