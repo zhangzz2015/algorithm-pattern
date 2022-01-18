@@ -104,6 +104,39 @@ void floydWarshall(int N, vector<vector<int>>& connections){
 
 ```
 
+dijkstra方法
+
+利用贪心方法计算从source 到任意target的最短路径。不能处理负权重。
+
+```cpp
+// Some code
+void dijkstra(int start, int N, vector<vector<int>>& connections) {
+    vector<vector<pair<int, int>>> graph(N, vector<pair<int, int>>());
+    // pair <current shortest path dis，node number>  possible shortest path. 
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; 
+    for (const auto& conn : connections) {
+        graph[conn[0]].push_back(make_pair(conn[2], conn[1]));
+        // graph[conn[1]].push_back(make_pair(conn[2], conn[0]));  // if undiction graph, add revers edge.
+    }
+    vector<int> d(N, INT_MAX);  // real shortest path from target to i node.
+    d[start] = 0; // first. set start shortest path as zero. 
+    pq.push(make_pair(0, start)); // and push into queue. 
+    while (!pq.empty()) {
+        pair<int, int> nextShortest = pq.top();
+        pq.pop();
+        if (d[nextShortest.second] < nextShortest.first) continue; // We already find shortest node. skip. Don't need to set visit flag.
+                                           // otherwise, we loop neighbour node. and upgrade queue 
+        for (const auto & v: graph[from]) { 
+            auto [cost, to] = v;
+            if (d[to] > d[from] + cost) {
+                d[to] = d[from] + cost;
+                pq.push(make_pair(d[to], to));
+            }
+        }
+    }
+}
+```
+
 
 
 ### BFS方法
