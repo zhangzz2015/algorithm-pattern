@@ -76,6 +76,32 @@ public:
 
 #### Topology order模板
 
+#### floydWarshall方法
+
+```cpp
+// Some code
+////  use dp to calculate all node min distance. 
+//  o[n^3]    space  o[n^2] 
+void floydWarshall(int N, vector<vector<int>>& connections){
+    vector<vector<int>> dp;  // graph matrix.  dp[i][j]  between node i and node j distance.
+    for (const auto& conn : connections) {
+        edges.emplace_back(conn[0], conn[1], conn[2]);
+        dp[conn[0]][conn[2]] = conn[3]
+        // es.emplace_back(conn[1], conn[0], conn[2]);  // 如果是无向图，加上反向边
+    }
+    vector<vector<int>> d(N, vector<int>(N, INT_MAX));  // 两节点间最短距离
+    for (int i = 0; i < N; ++i) d[i][i] = 0;
+    for (int k = 0; k < N; ++k) { /// middle node. see if i to k and k to j dis is small. 
+       for (int i = 0; i < N; ++i){
+           for (int j = 0; j < N; ++j) {
+               d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+           }
+       }
+    }
+}++
+
+```
+
 
 
 ### BFS方法
