@@ -78,6 +78,8 @@ public:
 
 #### floydWarshall方法
 
+可用来计算任意两点的最短距离。时间复杂度为O(n^3)，也可处理负边的情况。
+
 ```cpp
 // Some code
 ////  use dp to calculate all node min distance. 
