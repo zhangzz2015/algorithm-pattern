@@ -179,23 +179,27 @@ public:
 > 假设你有 n 个版本 \[1, 2, ..., n]，你想找出导致之后所有版本出错的第一个错误的版本。 你可以通过调用  bool isBadVersion(version)  接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。你应该尽量减少对调用 API 的次数。
 
 ```go
-func firstBadVersion(n int) int {
-    // 思路：二分搜索
-    start := 0
-    end := n
-    for start+1 < end {
-        mid := start + (end - start)/2
-        if isBadVersion(mid) {
-            end = mid
-        } else if isBadVersion(mid) == false {
-            start = mid
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        int left =1; 
+        int right =n; 
+        while(left<=right)
+        {
+            int middle = left + (right - left)/2; 
+            
+            if(isBadVersion(middle)){
+                right =  middle - 1; 
+            }
+            else{
+                left = middle + 1; 
+            }            
         }
+        //  [right left]
+        
+        return left;                 
     }
-    if isBadVersion(start) {
-        return start
-    }
-    return end
-}
+};
 ```
 
 ### [find-minimum-in-rotated-sorted-array](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/)
