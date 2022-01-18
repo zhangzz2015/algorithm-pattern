@@ -8,8 +8,9 @@
 
 ### 图的常用算法
 
+#### BFS 模板
+
 ```
-// Some code
 BFS 方法
 vector<vector<int>> graph; 
 
@@ -18,6 +19,64 @@ for(int i=0; i< n; i++)
 
 }
 ```
+
+#### DFS 模板
+
+#### Union find 模板
+
+```
+// Some code
+class UF
+{
+private:
+    vector<int> parent; 
+    vector<int> weight; 
+    int totalNum; 
+public:     
+    
+    UF(int n)
+    {
+       weight.assign(n, 0);
+       totalNum =n; 
+        for(int i=0; i< n; i++)
+        {
+            parent.push_back(i);
+        }
+    }
+    
+    int findParent(int p)
+    {
+        while(parent[p]!=p)
+        {
+           parent[p] = parent[parent[p]]; 
+           p = parent[p];
+        }
+        return p; 
+    }
+    
+    void unionTwoNode(int p, int q)
+    {
+        int parentP = findParent(p);
+        int parentQ = findParent(q); 
+        if(parentP==parentQ)
+            return; 
+        if(weight[parentP]>weight[parentQ])
+        {
+            parent[parentQ] = parentP; 
+            weight[parentP]++; 
+        }
+        else
+        {
+            parent[parentP] = parentQ; 
+            weight[parentQ]++; 
+        }
+    }
+};
+```
+
+#### Topology order模板
+
+
 
 ### BFS方法
 
