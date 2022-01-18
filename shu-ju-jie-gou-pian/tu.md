@@ -19,6 +19,69 @@ for(int i=0; i< n; i++)
 }
 ```
 
+### BFS方法
+
+#### [Open the Lock](https://leetcode.com/problems/open-the-lock/)
+
+```cpp
+// Some code
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        
+        unordered_set<string> deadrecord; 
+        for(int i=0; i< deadends.size(); i++)
+            deadrecord.insert(deadends[i]); 
+        unordered_set<string> visit; 
+        return bfs(deadrecord, "0000", target, visit); 
+    }
+    
+    int bfs(unordered_set<string> deadrecord,  string start, string target,  unordered_set<string>& visit)
+    {
+        
+        queue<string> que; 
+        que.push(start); 
+        int level =0; 
+        while(que.size())
+        {
+            int iSize = que.size(); 
+            for(int i=0; i< iSize; i++){
+                string topNode = que.front(); 
+                que.pop(); 
+                if(topNode == target)
+                    return level; 
+                for(int j=0; j< topNode.size(); j++)
+                {
+                    string tmpNode = topNode; 
+                    if(tmpNode[j]=='9')
+                        tmpNode[j] = '0'; 
+                    else
+                        tmpNode[j]++; 
+                    if(visit.count(tmpNode)==0 && deadrecord.count(topNode)==0)
+                    {
+                        que.push(tmpNode); 
+                        visit.insert(tmpNode); 
+                    }
+                    tmpNode = topNode; 
+                    if(tmpNode[j] == '0')
+                        tmpNode[j] = '9';
+                    else
+                        tmpNode[j]--; 
+                    if(visit.count(tmpNode)==0&&deadrecord.count(topNode)==0)
+                    {
+                        que.push(tmpNode);                                                                 
+                        visit.insert(tmpNode); 
+                    }
+                }
+            }         
+            level++; 
+        }        
+        return -1;                 
+    }
+        
+};
+```
+
 ### 图的二分
 
 使用涂色方法，相邻的边涂不同的颜色，对于起始可随机选择任何颜色，如果碰见冲突则表明无法完成二分，可使用BFS或DFS。
