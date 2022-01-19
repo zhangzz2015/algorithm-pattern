@@ -421,31 +421,38 @@ func hasCycle(head *ListNode) bool {
 思路：快慢指针，快慢相遇之后，慢指针回到头，快慢指针步调一致一起移动，相遇点即为入环点 ![cycled\_linked\_list](https://img.fuiboom.com/img/cycled\_linked\_list.png)
 
 ```go
-func detectCycle(head *ListNode) *ListNode {
-    // 思路：快慢指针，快慢相遇之后，慢指针回到头，快慢指针步调一致一起移动，相遇点即为入环点
-    if head == nil {
-        return head
-    }
-    fast := head.Next
-    slow := head
-
-    for fast != nil && fast.Next != nil {
-        if fast == slow {
-            // 慢指针重新从头开始移动，快指针从第一次相交点下一个节点开始移动
-            fast = head
-            slow = slow.Next // 注意
-            // 比较指针对象（不要比对指针Val值）
-            for fast != slow {
-                fast = fast.Next
-                slow = slow.Next
-            }
-            return slow
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        if(head == NULL || head->next==NULL)
+             return NULL; 
+        
+        ListNode* fast = head; 
+        ListNode* slow = head;         
+        while(fast && fast->next)
+        {
+            fast = fast->next->next; 
+            slow = slow->next;
+            if(fast==slow)
+                break; 
         }
-        fast = fast.Next.Next
-        slow = slow.Next
+        
+        if(fast ==slow) // be carefull this part. If not means not Cycle. 
+        {
+            fast = head; 
+            while(fast !=slow )
+            {
+                fast = fast->next; 
+                slow = slow->next; 
+            }
+
+            return fast; 
+        }
+        else
+            return NULL; 
+        
     }
-    return nil
-}
+};
 ```
 
 坑点
@@ -453,36 +460,7 @@ func detectCycle(head *ListNode) *ListNode {
 * 指针比较时直接比较对象，不要用值比较，链表中有可能存在重复值情况
 * 第一次相交后，快指针需要从下一个节点开始和头指针一起匀速移动
 
-另外一种方式是 fast=head,slow=head
-
-```go
-func detectCycle(head *ListNode) *ListNode {
-    // 思路：快慢指针，快慢相遇之后，其中一个指针回到头，快慢指针步调一致一起移动，相遇点即为入环点
-    // nb+a=2nb+a
-    if head == nil {
-        return head
-    }
-    fast := head
-    slow := head
-
-    for fast != nil && fast.Next != nil {
-        fast = fast.Next.Next
-        slow = slow.Next
-        if fast == slow {
-            // 指针重新从头开始移动
-            fast = head
-            for fast != slow {
-                fast = fast.Next
-                slow = slow.Next
-            }
-            return slow
-        }
-    }
-    return nil
-}
-```
-
-这两种方式不同点在于，**一般用 fast=head.Next 较多**，因为这样可以知道中点的上一个节点，可以用来删除等操作。
+一种方式是 fast=head,slow=head，另外战役中fast=head->next, slow = head，这两种方式不同点在于，**一般用 fast=head.Next 较多**，因为这样可以知道中点的上一个节点，可以用来删除等操作。
 
 * fast 如果初始化为 head.Next 则中点在 slow.Next
 * fast 初始化为 head,则中点在 slow
