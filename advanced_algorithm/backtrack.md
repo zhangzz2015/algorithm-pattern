@@ -106,42 +106,42 @@ func backtrack(nums []int, pos int, list []int, result *[][]int) {
 
 思路：需要记录已经选择过的元素，满足条件的结果才进行返回
 
-```go
-func permute(nums []int) [][]int {
-    result := make([][]int, 0)
-    list := make([]int, 0)
-    // 标记这个元素是否已经添加到结果集
-    visited := make([]bool, len(nums))
-    backtrack(nums, visited, list, &result)
-    return result
-}
-
-// nums 输入集合
-// visited 当前递归标记过的元素
-// list 临时结果集(路径)
-// result 最终结果
-func backtrack(nums []int, visited []bool, list []int, result *[][]int) {
-    // 返回条件：临时结果和输入集合长度一致 才是全排列
-    if len(list) == len(nums) {
-        ans := make([]int, len(list))
-        copy(ans, list)
-        *result = append(*result, ans)
-        return
+```cpp
+// method 1.  
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n = nums.size(); 
+        vector<bool> visit(n, false); 
+        vector<int> onePath; 
+        vector<vector<int>> ret; 
+        
+        backTrac(nums, visit, onePath, ret); 
+        return ret; 
     }
-    for i := 0; i < len(nums); i++ {
-        // 已经添加过的元素，直接跳过
-        if visited[i] {
-            continue
+    
+    void backTrac(vector<int>& nums, vector<bool>& visit,  vector<int>& onePath, vector<vector<int>>& ret)
+    {
+        if(onePath.size()== nums.size())
+        {
+            ret.push_back(onePath);             
+            return ; 
         }
-        // 添加元素
-        list = append(list, nums[i])
-        visited[i] = true
-        backtrack(nums, visited, list, result)
-        // 移除元素
-        visited[i] = false
-        list = list[0 : len(list)-1]
+                
+        for(int i=0; i< nums.size(); i++)
+        {
+            if(visit[i]==false)
+            {
+                onePath.push_back(nums[i]); 
+                visit[i] = true; 
+                backTrac(nums, visit, onePath, ret);             
+                onePath.pop_back();
+                visit[i] = false; 
+            }            
+        }                
     }
-}
+};
+// method 2. 
 ```
 
 ### [permutations-ii](https://leetcode-cn.com/problems/permutations-ii/)
