@@ -344,6 +344,61 @@ public:
 };
 ```
 
+### [Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)
+
+```cpp
+// Some code
+// 
+class Solution {
+public:
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        
+        //  get sum. 
+        // check sum%k ==0 
+        // first check if can find sum/k. 
+        // 
+        map<int,int> record;
+        int sum =0; 
+        for(int i=0; i< nums.size(); i++)
+        {
+             sum += nums[i];             
+            record[nums[i]]++; 
+        }
+        if(sum%k!=0)
+            return false; 
+        sum = sum/k; 
+        return backTrac(record, record.begin(), sum, 0, k,  0);         
+    }
+    
+    bool backTrac(map<int,int>& nums, map<int,int>::iterator start, int sum_target, int count, int k, int sum)
+    {
+        // Find k subset. return true. 
+        if(count ==k)
+            return true; 
+        
+        for(auto it = start; it!= nums.end(); it++)
+        {
+            //  (*it).second means how many this number was left.  zero means all were used. 
+            if((*it).second && (sum + (*it).first)<=sum_target)
+            {
+                sum+=(*it).first;
+                (*it).second--;
+                if(sum==sum_target && backTrac(nums, nums.begin(), sum_target, count+1, k, 0))
+                   return true; 
+                else
+                {
+                    if(backTrac(nums, it , sum_target,  count, k, sum))
+                        return true; 
+                }
+                (*it).second++;
+                sum -=(*it).first; 
+            }                        
+        }
+        return false;         
+    }
+};  
+```
+
 ## 练习
 
 * [ ] [subsets](https://leetcode-cn.com/problems/subsets/)
