@@ -32,7 +32,8 @@ func backtrack(选择列表,路径):
 
 ```cpp
 
-Use backTracking method. Draw recursion tree. Every tree node means one solution. It is a little differenet with combination. But main logic is similar.
+Use backTracking method. Draw recursion tree. Every tree node means one solution. 
+It is a little differenet with combination. But main logic is similar.
 1 2 3
 / \
 2 3 3
