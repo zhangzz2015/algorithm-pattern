@@ -108,6 +108,45 @@ func backtrack(nums []int, pos int, list []int, result *[][]int) {
 }
 ```
 
+### [Combinations](https://leetcode.com/problems/combinations/)
+
+```cpp
+// Some code
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        
+        //   1  2  3  ... 
+        //  /   /
+        // 2..n 3..n  
+        
+        vector<int> onePath; 
+        vector<vector<int>> ret; 
+        
+        backTrac(n, k, 1, onePath, ret);
+        return ret; 
+        
+    }
+    
+    void backTrac(int n, int k, int start, vector<int>& onePath, vector<vector<int>>& ret)
+    {
+        if(onePath.size()==k)
+        {
+            ret.push_back(onePath); 
+            return; 
+        }
+        
+        for(int i=start; i<=n; i++)
+        {
+            onePath.push_back(i); 
+            backTrac(n, k, i+1, onePath, ret); 
+            onePath.pop_back();             
+        }        
+    }
+};c++
+
+```
+
 ### [permutations](https://leetcode-cn.com/problems/permutations/)
 
 > 给定一个   没有重复   数字的序列，返回其所有可能的全排列。
@@ -149,7 +188,36 @@ public:
         }                
     }
 };
-// method 2. 
+// method 2.
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        //   convert to full tree. And use visit flag as upper level is used. 
+        ///       1     2   3 
+        ///      /\    /  \   
+        //   1 2  3   1[2]3
+        //     /   \  /  \ 
+        //    3    2  3 [2]  1  
+        vector<vector<int>> ret;         
+        backTrac(nums, ret, 0 ); 
+        return ret; 
+    }
+    
+    
+    void backTrac(vector<int>& nums,  vector<vector<int>>& ret, int start)
+    {
+        if(start>=nums.size())
+        {        
+          ret.push_back(nums); 
+        }
+        for(int i=start; i< nums.size(); i++)
+        {
+            swap(nums[start], nums[i]); 
+            backTrac(nums, ret, start+1); 
+            swap(nums[start], nums[i]);             
+        }                
+    }        
+}; 
 ```
 
 ### [permutations-ii](https://leetcode-cn.com/problems/permutations-ii/)
