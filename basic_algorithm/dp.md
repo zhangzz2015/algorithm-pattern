@@ -442,37 +442,49 @@ func isPalindrome(s string, i, j int) bool {
 > 给定一个无序的整数数组，找到其中最长上升子序列的长度。
 
 ```go
-func lengthOfLIS(nums []int) int {
-    // f[i] 表示从0开始到i结尾的最长序列长度
-    // f[i] = max(f[j])+1 ,a[j]<a[i]
-    // f[0...n-1] = 1
-    // max(f[0]...f[n-1])
-    if len(nums) == 0 || len(nums) == 1 {
-        return len(nums)
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        
+        // return dpMethod(nums); 
+        return cardMethod(nums); 
     }
-    f := make([]int, len(nums))
-    f[0] = 1
-    for i := 1; i < len(nums); i++ {
-        f[i] = 1
-        for j := 0; j < i; j++ {
-            if nums[j] < nums[i] {
-                f[i] = max(f[i], f[j]+1)
+    
+    int dpMethod(vector<int>& nums)
+    {
+        // method 1. dp.  O(n^2) 
+        vector<int> dp(nums.size(), 1); 
+        //  max subsquence number    the end of i. 
+        /// dp[i] = loop from 0 to i-1.  if(nums[i] > nums[j])  dp[i] = dp[j]+1; 
+        int ret =1; 
+        for(int i=1; i< nums.size(); i++)
+        {
+            for(int j=0; j<i; j++)
+            {
+                if(nums[i]>nums[j])
+                    dp[i] = max(dp[i], dp[j]+1);
             }
+            ret = max(ret, dp[i]); 
+        }      
+        return ret;         
+    }
+    // method 2. 
+    int cardMethod(vector<int>& nums)
+    {
+        vector<int>  seq; 
+        seq.push_back(nums[0]); 
+        for(int i=1; i< nums.size(); i++)
+        {
+            auto it = lower_bound(seq.begin(), seq.end(), nums[i]); 
+            if(it==seq.end())
+                seq.push_back(nums[i]); 
+            else
+                (*it) = nums[i];             
         }
+        
+        return seq.size(); 
     }
-    result := f[0]
-    for i := 1; i < len(nums); i++ {
-        result = max(result, f[i])
-    }
-    return result
-
-}
-func max(a, b int) int {
-    if a > b {
-        return a
-    }
-    return b
-}
+};
 ```
 
 ### [word-break](https://leetcode-cn.com/problems/word-break/)
