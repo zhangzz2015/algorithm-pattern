@@ -158,6 +158,51 @@ func decodeString(s string) string {
 }
 ```
 
+### [Score of Parentheses](https://leetcode.com/problems/score-of-parentheses/)
+
+```cpp
+// Some code
+class Solution {
+public:
+    int scoreOfParentheses(string s) {
+        // Time is O(n)  Space O(n)   Use 30min. when () situation. we need to calculate ret++ directly.  
+       // use recursion method. 
+       // diffculty is ()  is 1.  
+        int start =0; 
+        return dfs(s, start, 0);
+    }
+    
+    int dfs(string& s, int& start)
+    {
+        int score =0;     
+        int tmp =0; 
+        int ret =0; 
+        while(start < s.size())
+        {
+        if(s[start]=='(')
+         {
+           if(s[start+1]==')') // when () situation. we need to calculate ret++ directly. 
+           {
+               ret++; 
+               start +=2; 
+           }
+            else
+            {
+              start++;  
+              ret += 2* dfs(s, start); 
+            }
+         }
+        else
+         {
+               start++; 
+               return  ret; 
+         }         
+        }
+        return ret; 
+    }
+};
+```
+
 利用栈进行 DFS 递归搜索模板
 
 ```go
