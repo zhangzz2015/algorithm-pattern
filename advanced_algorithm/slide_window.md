@@ -45,7 +45,7 @@ void slidingWindow(string s, string t) {
 
 ## 示例
 
-[minimum-window-substring](https://leetcode.com/problems/minimum-window-substring/)
+### [minimum-window-substring](https://leetcode.com/problems/minimum-window-substring/)
 
 > 给你一个字符串 S、一个字符串 T，请在字符串 S 里面找出：包含 T 所有字母的最小子串
 
@@ -94,7 +94,7 @@ public:
 };
 ```
 
-[permutation-in-string](https://leetcode-cn.com/problems/permutation-in-string/)
+### [permutation-in-string](https://leetcode-cn.com/problems/permutation-in-string/)
 
 > 给定两个字符串  **s1**  和  **s2**，写一个函数来判断  **s2**  是否包含  \*\*s1 \*\*的排列。
 >
@@ -146,7 +146,7 @@ public:
 };
 ```
 
-[438 Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/)
+### [438 Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/)
 
 > 给定一个字符串  \*\*s \*\*和一个非空字符串  **p**，找到  \*\*s \*\*中所有是  \*\*p \*\*的字母异位词的子串，返回这些子串的起始索引。
 
@@ -197,7 +197,7 @@ public:
 };
 ```
 
-[longest-substring-without-repeating-characters](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+### [longest-substring-without-repeating-characters](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 
 > 给定一个字符串，请你找出其中不含有重复字符的   最长子串   的长度。 示例  1:
 >
@@ -235,7 +235,48 @@ public:
 };
 ```
 
+### Subarrays with K Different Integers
 
+```cpp
+// Some codec
+class Solution {
+public:
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        
+        // Time O(n)  Space O(n)   Use  30 min. 
+        // transfer this question.   k=<subarray_val      k+1=<subarry_val
+        return maxsubarry(nums, k) -  maxsubarry(nums, k+1);
+        
+    }
+    
+    int maxsubarry(vector<int>& nums, int k)
+    {
+        
+        unordered_map<int,int> record; 
+        int left =0; 
+        int right =0; 
+        int ret =0; 
+        while(right < nums.size())
+        {
+            record[nums[right]]++;             
+            // shrink left. from left to right. min 
+            while(record.size()==k )
+            {
+                // from right to end. all are substring meet requrient. 
+                ret +=(nums.size() - right); 
+                record[nums[left]]--; 
+                if(record[nums[left]]==0)
+                    record.erase(nums[left]); 
+                left++; 
+            }                                
+            right++; 
+            
+        }
+        
+        return ret; 
+    }
+};
+```
 
 ## 总结
 
