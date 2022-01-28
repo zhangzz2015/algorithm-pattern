@@ -344,7 +344,7 @@ public:
 };
 ```
 
-N-Queens II
+### N-Queens II
 
 ```cpp
 // Some code
