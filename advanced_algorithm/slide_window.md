@@ -21,15 +21,33 @@ void slidingWindow(string s, string t) {
         /********************/
 
         // 判断左侧窗口是否要收缩
-        while (window needs shrink) {
-            // d 是将移出窗口的字符
+        // 我们有两种情况，一种找最大，一种找最小
+        // 情况1. 
+        while (isValid()) {  // Find 最小
+            // d 是将移出窗口的字符            
             char d = s[left];
             // 左移窗口
             left++;
             // 进行窗口内数据的一系列更新
+            
+            //  跟新结果
+            ret = min(ret, right-left) 
             ...
         }
-        
+        // 情况2. 
+        while(!isValid())
+        {
+            // d 是将移出窗口的字符            
+            char d = s[left];
+            // 左移窗口
+            left++;
+            // 进行窗口内数据的一系列更新        
+        }
+        // 跟新结果
+        if(isValid) //  [left right]
+        {
+            ret = max(ret, right - left); // may +1.  
+        }
         // 右移窗口
         right++;        
     }
