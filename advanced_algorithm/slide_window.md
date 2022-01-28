@@ -296,6 +296,76 @@ public:
 };
 ```
 
+### [Longest Substring with At Least K Repeating Characters](https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/)
+
+```cpp
+// Some code
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        // Time O(n*k)   Space O(1)   Use 40 min. Didn't figure out.  Learn to transfer to another simple question. 
+        // If we find  x letter and x letter frequency is greater than or equal to k.  
+        vector<int> s_table(26); 
+        int total_num = 0; 
+        int ret =0; 
+        for(int i=0; i< s.size(); i++){
+            int index = s[i] -'a'; 
+            s_table[index]++; 
+            if(s_table[index]==1)
+                total_num++; 
+        }
+        for(int i=1; i<=total_num; i++)
+        {
+            ret = max(ret, longestSubstringMLetter(s, k, i)); 
+        }
+        
+        return ret; 
+        
+    }
+    // Use sliding window to find substring include m letter and those letter is greater than or equal to k. 
+    int longestSubstringMLetter(string s, int k , int m)        
+    {
+        int ret =0; 
+        vector<int> s_table(26); 
+        int left =0; 
+        int right =0; 
+        int num_letter =0; 
+        int num_largek =0;             
+        while(right < s.size())
+        {
+            int index = s[right] - 'a'; 
+            s_table[index]++; 
+            if(s_table[index]==1)
+                num_letter++; 
+            if(s_table[index]==k)
+                num_largek++; 
+            // Fix right. and we move left. and state isnot meet. And try to increase left and find possible max one. 
+            // Find possible solution. we shrink solution.
+            // this state is not meat the requriment. 
+            while(num_letter>=m && num_largek>=m && 
+                  num_largek<num_letter && left<right)
+            {
+                int left_index = s[left] -'a'; 
+                s_table[left_index]--; 
+                if(s_table[left_index]==0)
+                    num_letter--; 
+                if(s_table[left_index]==k-1)
+                    num_largek--; 
+                left++; 
+            }
+            if(num_largek==num_letter && num_letter==m) // find one solution. 
+            {
+                ret = max(ret, right - left+1); 
+            }
+            right++;             
+        }
+        return ret; 
+    }
+};
+```
+
+
+
 ## 总结
 
 * 和双指针题目类似，更像双指针的升级版，滑动窗口核心点是维护一个窗口集，根据窗口集来进行处理
