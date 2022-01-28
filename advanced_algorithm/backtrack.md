@@ -344,6 +344,60 @@ public:
 };
 ```
 
+N-Queens II
+
+```cpp
+// Some code
+class Solution {
+public:
+    int totalNQueens(int n) {
+        
+    // Time O(n^n)  Space O(n)  Use 15 min.        
+        vector<int> onePath;
+        int ret=0; 
+        
+        backTrac(n, onePath, 0, ret); 
+        return ret; 
+        
+    }
+    
+    
+    void backTrac(int n, vector<int>& onePath, int row,  int& ret)
+    {
+        if(onePath.size()==n) // Find one possible solution. 
+        {
+            ret++; 
+            return;             
+        }            
+        for(int col =0; col <n; col++) // loop every col and see if it is valid. 
+        {
+            if(isValid(onePath, row, col))
+            {
+                onePath.push_back(col); 
+                backTrac(n, onePath, row+1, ret);
+                onePath.pop_back(); 
+            }
+        }
+    }
+    
+    bool isValid(vector<int>& onePath, int irow, int icol)
+    {
+        // vertical
+        for(int i=0; i< onePath.size(); i++)
+        {
+            if(onePath[i] == icol)
+                return false; 
+            if(onePath[i]+(irow-i) == icol)
+                return false; 
+            if(onePath[i]-(irow-i) == icol)
+                return false; 
+        }        
+        return true;         
+    }
+};
+
+```
+
 ### [Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)
 
 采用回溯方法，要注意一些减枝策略。另外递归函数的返回要注意。同时为了加速，当sum\_target\<sum，我们不需要从0开始搜索，因为之前的以前搜索过了。
