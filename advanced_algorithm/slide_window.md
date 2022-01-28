@@ -364,7 +364,46 @@ public:
 };
 ```
 
+### [Grumpy Bookstore Owner](https://leetcode.com/problems/grumpy-bookstore-owner/)
 
+```cpp
+// Some code
+class Solution {
+public:
+    int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int minutes) {
+        
+        // Time O(n)  Space O(1)  Use: 15min 
+        // fix sliding windows. 
+        // Sum1 is total customer for non grumpy. 
+        // Sum2 is max customer for grump under minutes window. 
+        // ret = sum1 + sum2; 
+        int sum1 =0; 
+        int sum2 =0; 
+        for(int i=0; i< minutes; i++)
+        {
+            if(grumpy[i])
+               sum2 += customers[i]; 
+            else
+               sum1 += customers[i];   
+        }
+        int ret = sum2;         
+        for(int i=minutes; i< customers.size(); i++)
+        {
+            if(grumpy[i])
+                sum2 += customers[i]; 
+            else
+                sum1 +=customers[i]; 
+            
+            if(grumpy[i-minutes])
+                 sum2 -=customers[i-minutes];       
+            
+            ret = max(ret,sum2);
+        }
+        
+        return ret+sum1;                 
+    }
+};
+```
 
 ## 总结
 
