@@ -34,7 +34,7 @@
 * [Facebook](mian-shi-gong-si/facebook.md)
 * [Amazon](mian-shi-gong-si/amazon.md)
 * [Amazon VO](mian-shi-gong-si/amazon-vo.md)
-* [Google](mian-shi-gong-si/google.md)
+* [Google VO](mian-shi-gong-si/google.md)
 * [Google](mian-shi-gong-si/google-1.md)
 * [Linkedin](mian-shi-gong-si/linkedin.md)
 
