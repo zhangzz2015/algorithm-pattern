@@ -18,7 +18,7 @@
 
 二分模板
 
-```
+```cpp
 //  Template 1.   
 //  lower bound. Find minum index >= val
 // defind boundary 

@@ -1,5 +1,7 @@
 # 其他的技巧
 
+### 操作矩阵
+
 [48. Rotate Image](https://leetcode.com/problems/rotate-image/)
 
 把矩阵旋转转化为矩阵的转置和对称操作。
@@ -199,6 +201,70 @@ public:
         
     }
 };
+```
+
+### Trie
+
+```cpp
+// Some code
+struct triNode
+{
+vector<triNode*> child;
+bool isWord;   
+   triNode()
+   {
+     child.assign(26,NULL); 
+     isWord= false; 
+   }
+}; 
+
+class Trie {
+public:
+    triNode* root; 
+    Trie() {
+      root = new triNode();   
+    }
+    
+    void insert(string word) {
+       triNode* current =root; 
+       for(int i=0; i< word.size(); i++)
+       {
+          int index =word[i] - 'a'; 
+          if(current->child[index]==NULL)
+          {
+             current->child[index] = new triNode(); 
+          }
+          current = current->child[index]; 
+       }
+       current->isWord= true;         
+    }
+    
+    bool search(string word) {
+       triNode* current =root; 
+       for(int i=0; i< word.size(); i++)
+       {
+          int index = word[i] - 'a'; 
+           if(current->child[index]==NULL)
+              return false; 
+            current = current->child[index];    
+       }
+       
+       return current ->isWord;         
+    }
+    
+    bool startsWith(string prefix) {
+        triNode* current = root; 
+        for(int i=0; i< prefix.size(); i++)
+        {
+           int index = prefix[i] - 'a'; 
+           if(current->child[index]==NULL)
+              return false; 
+           current = current->child[index]; 
+        }
+        return true; 
+    }
+};
+
 ```
 
 ###
