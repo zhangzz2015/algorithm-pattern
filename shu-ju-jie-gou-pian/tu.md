@@ -11,7 +11,7 @@
 #### BFS 模板
 
 ```
-BFS 方法
+BFS method1. 
 vector<vector<int>> graph; 
 
 for(int i=0; i< n; i++)
