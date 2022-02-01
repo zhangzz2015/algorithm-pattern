@@ -11,16 +11,114 @@
 #### BFS 模板
 
 ```
-BFS method1. 
-vector<vector<int>> graph; 
-
-for(int i=0; i< n; i++)
+// BFS method 1.   Time complexity O(V+E)  Space O(V)
+void bfs(vector<vector<int>>& graph, int source)
 {
+    vector<bool> visit(graph.size(),false); 
+    queue<int> que; 
+    que.push(source); 
+    visit[source] = true; 
+    while(que.size()){
+       int topNode = que.front(); 
+        que.pop(); 
+        for(int i=0; i< graph[topNode].size(); i++){
+            int nextNode = graph[topNode][j]; 
+           if(visit[nextNode]==false) { // avoid loop. 
+              que.push(nextNode); 
+           }
+        } 
+    }    
+}
 
+// BFS method 2.   Time complexity O(V+E)  Space O(V)
+void bfs(vector<vector<int>>& graph, int source)
+{
+    vector<bool> visit(graph.size(),false); 
+    queue<int> que; 
+    que.push(source); 
+    while(que.size()){
+       int topNode = que.front(); 
+        que.pop(); 
+        if(visit[topNode]) continue;  // avoid loop and repeating 
+        visit[topNode] = true; 
+        for(int i=0; i< graph[topNode].size(); i++){
+            int nextNode = graph[topNode][j]; 
+              que.push(nextNode); 
+           }
+        } 
+    }    
 }
 ```
 
 #### DFS 模板
+
+```cpp
+// method 1. 
+//Starting from a given node, traverse all the reachable nodes using 
+//dpth first heuristic and each node is only visited once.
+// Mark the node as visited when first time entering the node.
+// time: O(V + E) every node will be visited once O(V) and 
+// every edge will only be generated once.
+//  space: O(V)
+void dfs(vector<vector<int>>& graph, int root, vector<bool>& visit)
+{
+   // node was visited only once. Some edge may not visit. 
+   if(visit[root]) return;  
+   visit[root] = true; 
+   
+   for(int i=0; i< graph[root].size(); i++)
+   {
+       int nextNode = graph[root][i]; 
+       dfs(graph, nextNode, visit);  
+   }
+
+}
+// method 2. 
+// Mark visited after all its descendants.
+// We need additional state "visiting" to deal with a special
+// marker of the nodes on the current dfs path to avoid duplicately visiting nodes.
+/// Mark the nodes as visitin when first time entering the node, 
+///Mark the node as visited when all the neighbors are visited.
+
+time: O(E + V)
+space: O(V)
+// visit  0  mean not visit. 
+//        1  mean visiting. 
+//        2  visited. 
+void dfs(vector<vector<int>>& graph, int root, vector<int>& visit)
+{
+   // node was visited only once. Some edge may not visit. 
+   if(visit[root]==2) return;   // visited. don't visit. 
+   if(visit[root]==1) return;   // visiting. means has loop. 
+   visit[root] = 1; 
+   for(int i=0; i< graph[root].size(); i++)
+   {
+       int nextNode = graph[root][i]; 
+       dfs(graph, nextNode, visit);  
+   }
+   visit[root] = 2 //   finsh all descendants
+}
+
+// method 3.   
+// Care about the pathes, instead of the vertex is reachable in this case.
+// Find all paths from the start node, on the path there is no duplicate vertices.
+// only mark for the nodes on the current dfs path, avoiding cycle on the dfs path
+
+//time: O(branch^V)
+// space: O(V)
+void dfs(vector<vector<int>>& graph, int root, vector<int>& visit)
+{
+   // node was visited only once. Some edge may not visit. 
+   if(visit[root]==1) return;   // visiting. means has loop. 
+   visit[root] = 1; 
+   for(int i=0; i< graph[root].size(); i++)
+   {
+       int nextNode = graph[root][i]; 
+       dfs(graph, nextNode, visit);  
+   }
+   visit[root] = 0 //   reset it. You may visit same node mulitple times. 
+}
+```
 
 #### Union find 模板
 
