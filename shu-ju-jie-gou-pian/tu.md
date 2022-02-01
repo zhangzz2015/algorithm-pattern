@@ -168,6 +168,7 @@ public:
             parent[parentP] = parentQ; 
             weight[parentQ]++; 
         }
+        totalNum--; 
     }
 };
 ```
