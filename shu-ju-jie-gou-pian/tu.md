@@ -161,12 +161,12 @@ public:
         if(weight[parentP]>weight[parentQ])
         {
             parent[parentQ] = parentP; 
-            weight[parentP]++; 
+            weight[parentP]+=weight[parentQ]; 
         }
         else
         {
             parent[parentP] = parentQ; 
-            weight[parentQ]++; 
+            weight[parentQ]+=weight[parentP]; 
         }
         totalNum--; 
     }
