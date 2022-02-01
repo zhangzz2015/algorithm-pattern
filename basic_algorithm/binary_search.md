@@ -16,6 +16,46 @@
 
 时间复杂度 O(logn)，使用场景一般是有序数组的查找
 
+二分模板
+
+```
+//  Template 1.   
+//  lower bound. Find minum index >= val
+// defind boundary 
+//    left<val | bound  right>=val   
+// find  >=val. find minum index >=val. 
+int lower_bound(vector<int>& nums, int left, int right, int val)
+{
+   while(left<=right)
+   {
+       int middle = left + (right - left)/2; 
+       if(nums[middle]>=val)
+          right = middle -1; 
+       else
+          left = middle+1; 
+   }
+   //   [right left]
+   return left; 
+}
+//  Template 2. 
+// upper bound   Find min index > val  
+// define boundary 
+//  left<=val | bound right > val. 
+int upper_bound(vector<int>& nums, int left, int right, int val)
+{
+   while(left<=right)
+   {
+       int middle = left + (right - left)/2; 
+       if(nums[middle]>val)
+          right = middle -1; 
+       else
+          left = middle+1; 
+   }
+   //   [right left]
+   return left; 
+}
+```
+
 典型示例
 
 [binary-search](https://leetcode-cn.com/problems/binary-search/)
