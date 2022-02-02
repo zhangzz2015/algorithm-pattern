@@ -758,7 +758,7 @@ func max(a,b int)int{
 
 ### [Last Stone Weight II](https://leetcode.com/problems/last-stone-weight-ii/)
 
-```
+```cpp
 // Some code
 class Solution {
 public:
@@ -801,6 +801,66 @@ public:
     }
 };
 
+```
+
+### Partition Equal Subset Sum
+
+```cpp
+// Some code
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        
+        //  Time O(sum/2 * m)
+        int sum =0; 
+        for(int i=0; i< nums.size(); i++)
+        {
+            sum += nums[i]; 
+        }
+        if(sum%2==1) return false; 
+        
+        sum =sum/2; 
+        // find subset and target = sum.         
+        //              
+        //  dp[i][j]     dp[i-num[j]][j-1] || dp[i][j-1]  
+        vector<bool> dp(sum+1, false);
+        dp[0] = true; 
+        for(int j=0; j<nums.size(); j++)
+        {  
+          for(int i=sum; i>0; i--)  
+          {
+           if(i>=nums[j])
+           {
+              dp[i] = dp[i]|| dp[i-nums[j]]; 
+           }
+          } 
+        }
+        
+        return dp[sum];        
+    }    
+/*
+        vector<vector<bool>> dp(sum+1, vector<bool>(nums.size()+1, false)); 
+        for(int i=0; i<=sum; i++)
+        {
+            for(int j=0; j<nums.size(); j++)
+            {  
+               if(i==0)
+               {
+                   dp[i][j+1] = true; 
+               }
+               else if(i>=nums[j])
+               {
+                  dp[i][j+1] = dp[i-nums[j]][j] || dp[i][j]; 
+               }
+               else
+                  dp[i][j+1] = dp[i][j];
+            }
+        }
+        
+        return dp[sum][nums.size()];
+*/
+
+};
 ```
 
 ## 练习
