@@ -267,6 +267,87 @@ public:
 
 ```
 
+#### [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/)
+
+```cpp
+// Some code++
+/// use trie. 
+struct Trie
+{
+    vector<Trie*> child; 
+    bool isWord; 
+    Trie()
+    {
+        child.resize(26, NULL); 
+        isWord = false; 
+    }        
+}; 
+class WordDictionary {
+public:
+    Trie * root; 
+    WordDictionary() {
+        
+        root = new Trie(); 
+    }
+    
+    void addWord(string word) {
+        
+        Trie * current = root; 
+        for(int i =0; i< word.size(); i++)
+        {
+            int index = word[i]-'a';
+            if(current->child[index]==NULL)
+            {
+                current->child[index] = new Trie; 
+            }
+            current = current->child[index]; 
+        }
+        current->isWord = true; 
+        
+    }
+    
+    bool search(string word) {
+        
+        return dfs(word, 0, root); 
+                        
+    }
+    
+    bool dfs(string& word, int start, Trie* root)
+    {
+        if(start == word.size())
+        {
+           if(root)
+               return root->isWord; 
+           else
+               return false; 
+        }
+        
+        if(word[start]=='.')
+        {
+            for(int i=0; i< root->child.size(); i++){                
+                if(root->child[i])
+                {
+                    if(dfs(word, start+1, root->child[i]))
+                        return true; 
+                }
+            }
+        }
+        else 
+        {
+            int index= word[start] -'a'; 
+            if(root->child[index])
+            {
+                if(dfs(word, start+1, root->child[index]))
+                    return true; 
+            }
+        }
+        
+        return false; 
+        
+    }
+};
+```
+
 ### [Majority Element II](https://leetcode.com/problems/majority-element-ii)
 
 Boyer-Moore Majority Vote algorithm：利用最多数的特点，如果超过1/k的比列则表明最多有k-1个数。当我们达到了k-1，则检查是否在candidate中，如果是则+1，否则则把所有candidate -1，抵消一次。如果不足k-1，则首先检查是否在candiate中，如果是则+1，否则把当前数放入candidate，并计数为一次。
