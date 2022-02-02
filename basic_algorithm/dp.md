@@ -555,51 +555,93 @@ func inDict(s string,dict map[string]bool) bool {
 > 给定两个字符串  text1 和  text2，返回这两个字符串的最长公共子序列。 一个字符串的   子序列   是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。 例如，"ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。两个字符串的「公共子序列」是这两个字符串所共同拥有的子序列。
 
 ```go
-func longestCommonSubsequence(a string, b string) int {
-    // dp[i][j] a前i个和b前j个字符最长公共子序列
-    // dp[m+1][n+1]
-    //   ' a d c e
-    // ' 0 0 0 0 0
-    // a 0 1 1 1 1
-    // c 0 1 1 2 1
-    //
-    dp:=make([][]int,len(a)+1)
-    for i:=0;i<=len(a);i++ {
-        dp[i]=make([]int,len(b)+1)
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        
+         ///   dp method. 
+         //  dp[i][j]   if(s1[i] == s2[j])   dp[i-1][j-1] +1; 
+         //             else               max(dp[i-1][j], dp[i][j-1]); 
+        if(text1.size()>text2.size()) 
+           return dpMethod2(text1, text2); 
+        else
+           return dpMethod2(text2, text1);  
+/*           
+        int n = text1.size(); 
+        int m = text2.size();         
+        vector<vector<int>> mem(n, vector<int>(m, -1));
+        return dfs(text1, text2, n-1, m-1, mem); */
     }
-    for i:=1;i<=len(a);i++ {
-        for j:=1;j<=len(b);j++ {
-            // 相等取左上元素+1，否则取左或上的较大值
-            if a[i-1]==b[j-1] {
-                dp[i][j]=dp[i-1][j-1]+1
-            } else {
-                dp[i][j]=max(dp[i-1][j],dp[i][j-1])
+//  method 1    
+    int dfs(string& text1, string& text2, int start1, int start2, vector<vector<int>>& mem)
+    {
+        if(start1<0 || start2<0)
+            return 0; 
+        
+        if(mem[start1][start2]!=-1)
+            return mem[start1][start2]; 
+        int ret =0; 
+        if(text1[start1] == text2[start2])
+        {
+            ret = dfs(text1, text2, start1-1, start2-1, mem)+1; 
+        }
+        else
+            ret = max(dfs(text1, text2, start1-1, start2, mem), 
+                      dfs(text1, text2, start1, start2-1, mem));         
+        mem[start1][start2]= ret; 
+        return ret; 
+    }
+    
+///  method 2.   two dimension dp.  Time O(n*m) Space O(n*m)  Use 10m
+    int dpMethod1(string& text1, string& text2)
+    {
+        int n = text1.size(); 
+        int m = text2.size(); 
+        vector<vector<int>> dp(n+1, vector<int>(m+1, 0)); 
+        
+        for(int i=0; i< text1.size(); i++)
+        {
+            for(int j=0; j< text2.size(); j++)
+            {
+                if(text1[i]==text2[j])
+                    dp[i+1][j+1] = dp[i][j]+1; 
+                else
+                    dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j]); 
             }
         }
+        
+        return dp[n][m];         
     }
-    return dp[len(a)][len(b)]
-}
-func max(a,b int)int {
-    if a>b{
-        return a
-    }
-    return b
-}
+    // compress memory to one direction. 
+    // Time O(n*m)  Space O(min(n,m)) Use 10min 
+    int dpMethod2(string& text1, string& text2)
+    {
+        int n = text1.size(); 
+        int m = text2.size(); 
+        vector<int> dp1(m+1, 0); 
+        vector<int> dp2(m+1, 0); 
+        vector<int> * prev = &dp1; 
+        vector<int> * current = & dp2; 
+        for(int i=0; i< text1.size(); i++){
+            for(int j=0; j< text2.size(); j++){
+                if(text1[i]==text2[j])
+                    (*current)[j+1] = (*prev)[j]+1; 
+                else
+                    (*current)[j+1] = max( (*prev)[j+1], (*current)[j]); 
+              }
+            swap(current, prev); 
+        }
+                
+        
+        return (*prev)[m];         
+    }    
+    
+
+    
+}; 
 ```
 
 注意点
-
-* go 切片初始化
-
-```go
-dp:=make([][]int,len(a)+1)
-for i:=0;i<=len(a);i++ {
-    dp[i]=make([]int,len(b)+1)
-}
-```
-
-* 从 1 开始遍历到最大长度
-* 索引需要减一
 
 ### [edit-distance](https://leetcode-cn.com/problems/edit-distance/)
 
