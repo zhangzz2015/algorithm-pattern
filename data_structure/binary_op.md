@@ -296,6 +296,40 @@ func rangeBitwiseAnd(m int, n int) int {
 }
 ```
 
+#### [Gray Code](https://leetcode.com/problems/gray-code/)
+
+```cpp
+// Some code
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+        
+        vector<int> ret; 
+        for(int i=0; i<n; i++)
+        {
+           if(i==0)
+           {
+               ret.push_back(0); 
+               ret.push_back(1); 
+           }
+           else
+           {
+               int sum = 1<<i; 
+               int isize = ret.size(); 
+               for(int j=isize-1; j>=0; j--)
+               {
+                   ret.push_back(ret[j]+sum); 
+               }               
+           }                            
+        }
+        
+        return ret; 
+        
+    }
+};
+
+```
+
 ## 练习
 
 * [ ] [single-number](https://leetcode-cn.com/problems/single-number/)
