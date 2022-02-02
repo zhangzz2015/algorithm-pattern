@@ -756,6 +756,53 @@ func max(a,b int)int{
 }
 ```
 
+### [Last Stone Weight II](https://leetcode.com/problems/last-stone-weight-ii/)
+
+```
+// Some code
+class Solution {
+public:
+    int lastStoneWeightII(vector<int>& stones) {
+        
+///   Time O(sum/2 * n)  Space O(sum/2)  Use 20min.         
+        //   transfer this question to knapsack problem. 
+        int sum =0; 
+        for(int i=0; i< stones.size(); i++)
+        {
+            sum +=stones[i]; 
+        }
+        //  transfer question. to find stones and reach sum/2 as possible. 
+        int target = sum/2; //  we split stones two parts. If two parts sum is equal. then final is zero. 
+        //  i choose from 0 to i stones. 
+        //  j is total value. 
+        //  dp[i][j] =  max(dp[i][j-stons[i]], dp[i-1][j]) ; 
+/*        vector<vector<int>> dp(stones.size()+1, vector<int>(target+1, 0)); 
+        for(int i=0; i< stones.size(); i++)
+        {
+            for(int j=1; j<=target; j++)
+            {
+                if(j-stones[i]>=0)
+                   dp[i+1][j] = max(dp[i][j-stones[i]]+stones[i], dp[i][j]);
+                else
+                    dp[i+1][j] = dp[i][j]; 
+            }
+        }*/
+        vector<int> dp(target+1, 0); 
+        for(int i=0; i< stones.size(); i++)
+        {
+            for(int j=target; j>=1; j--)
+            {
+                if(j-stones[i]>=0)
+                   dp[j] = max(dp[j-stones[i]]+stones[i], dp[j]);
+            }
+        }        
+        
+        return  sum - dp[target]*2;                
+    }
+};
+
+```
+
 ## 练习
 
 Matrix DP (10%)

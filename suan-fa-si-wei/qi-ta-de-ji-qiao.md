@@ -267,4 +267,122 @@ public:
 
 ```
 
+### [Majority Element II](https://leetcode.com/problems/majority-element-ii)
+
+Boyer-Moore Majority Vote algorithm：利用最多数的特点，如果超过1/k的比列则表明最多有k-1个数。当我们达到了k-1，则检查是否在candidate中，如果是则+1，否则则把所有candidate -1，抵消一次。如果不足k-1，则首先检查是否在candiate中，如果是则+1，否则把当前数放入candidate，并计数为一次。
+
+```
+// Some code
+// 
+    vector<int> major(vector<int>& nums, int k)
+    {
+        unordered_map<int, int> record; 
+        
+        for(int i=0; i< nums.size(); i++)
+        {
+            if(record.size()==k-1 )
+            {
+               if(record.count(nums[i])) 
+                  record[nums[i]]++;
+               else
+               {
+                   auto it = record.begin();
+                   while(it!=record.end())
+                   {
+                       (*it).second--; 
+                       if((*it).second==0)
+                        {
+                            it= record.erase(it); 
+                        }
+                       else
+                           it++; 
+                   }
+               }  
+            }
+            else if(record.size()<(k-1) )
+            {
+               if(record.count(nums[i])) 
+                  record[nums[i]]++;                
+               else  
+                  record[nums[i]]=1; 
+            }            
+        }
+        for(auto it = record.begin(); it!=record.end(); it++)
+        {
+            (*it).second=0; 
+        }
+        for(int i=0; i< nums.size(); i++)
+        {
+            if(record.count(nums[i]))
+            {
+                record[nums[i]]++; 
+            }
+        }
+        vector<int> ret; 
+        for(auto it = record.begin(); it!=record.end(); it++)
+        {
+            if((*it).second>nums.size()/k)
+            {
+                ret.push_back((*it).first); 
+            }
+        }
+        return ret; 
+        
+    }
+    
+    vector<int> major2(vector<int>& nums)
+    {
+        int count1=0;
+        int count2=0;
+        int nums1 =0; 
+        int nums2 =0; 
+        for(int i=0; i< nums.size(); i++)
+        {
+            if(count1>0 && nums1 == nums[i])
+            {
+                count1++; 
+            }
+            else if(count2>0 && nums2 == nums[i])
+            {
+                count2++; 
+            }
+            else if(count1 == 0)
+            {
+                nums1 = nums[i]; 
+                count1++; 
+            }
+            else if(count2 ==0)
+            {
+                nums2 = nums[i];
+                count2++; 
+            }
+            else // for other situation. 
+            {
+                count1--; 
+                count2--;
+            }                        
+        }
+        
+        int sum1=0; 
+        int sum2=0;
+        for(int i=0; i< nums.size(); i++)
+        {
+            if(count1>0 && nums[i] == nums1)
+            {
+                sum1++; 
+            }
+            else if(count2>=0 && nums[i] == nums2)
+            {
+                sum2++; 
+            }
+        }
+        vector<int> ret; 
+        if(sum1> nums.size()/3 )
+            ret.push_back(nums1); 
+        if(sum2> nums.size()/3 )
+            ret.push_back(nums2);   
+        return ret;         
+    }
+```
+
 ###
