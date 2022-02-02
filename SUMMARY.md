@@ -20,6 +20,7 @@
 * [二分搜索](basic\_algorithm/binary\_search.md)
 * [排序算法](basic\_algorithm/sort.md)
 * [动态规划](basic\_algorithm/dp.md)
+* [位运算](ji-chu-suan-fa-pian/wei-yun-suan.md)
 
 ## 算法思维
 
