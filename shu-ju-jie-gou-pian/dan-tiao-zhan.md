@@ -5,6 +5,7 @@
 ```cpp
 // Some code
 // calculate leftSmall and right small index. If it is -1, mean it hasnot. 
+///  increasing stack. 
 void findNextSmall(vector<int>& num)
 {
    int n = nums.size(); 
@@ -30,10 +31,10 @@ void findNextSmall(vector<int>& num)
 }
 
 // Some code
-// calculate leftSmall and right small index. If it is -1, mean it hasnot. 
+// calculate left Large and right Large index. If it is -1, mean it hasnot. 
 void findNextLarge(vector<int>& num)
 {
-   int n = nums.size(); 
+   int n = nums.size();
    vector<int>  leftLarge(n, -1);  
    vector<int>  rightLarge(n, -1); 
    vector<int> stack; 
