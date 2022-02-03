@@ -21,7 +21,7 @@ void slidingWindow(string s, string t) {
         printf("window: [%d, %d)\n", left, right);
         /********************/
 
-        // 判断左侧窗口是否要收缩
+        // 判断左侧窗口是否要收缩，固定右端，收缩左端，找到最小解
         // 情况1. 
         while (isValid()) {  // Find 最小
             //  跟新结果
@@ -61,7 +61,7 @@ void slidingWindow(string s, string t) {
         // 判断左侧窗口是否要收缩
         // 
         // 情况2. 一种找最大
-        while(!isValid()) //  
+        while(!isValid()) // 固定左边，增加右边，找到最大解。 
         {
             // d 是将移出窗口的字符            
             char d = s[left];
