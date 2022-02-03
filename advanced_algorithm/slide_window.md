@@ -53,13 +53,10 @@ void slidingWindow(string s, string t) {
         char c = s[right];
         // 进行窗口内数据的一系列更新
         ...
-
         /*** debug 输出的位置 ***/
         printf("window: [%d, %d)\n", left, right);
         /********************/
-
         // 判断左侧窗口是否要收缩
-        // 
         // 情况2. 一种找最大
         while(!isValid()) // 固定左边，增加右边，找到最大解。 
         {
