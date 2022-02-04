@@ -62,7 +62,7 @@ void bfs(vector<vector<int>>& graph, int source)
 //  space: O(V)
 void dfs(vector<vector<int>>& graph, int root, vector<bool>& visit)
 {
-   // node was visited only once. Some edge may not visit. 
+   // node was visited only once. 
    if(visit[root]) return;  
    visit[root] = true; 
    
@@ -173,7 +173,151 @@ public:
 };
 ```
 
-#### Topology order模板
+#### [Accounts Merge](https://leetcode.com/problems/accounts-merge/)
+
+```cpp
+// Some code
+class UF{
+private:
+vector<int> parent; 
+int count;
+public: 
+    UF(int n)
+    {
+        for(int i=0; i< n; i++)
+            parent.push_back(i); 
+        count = n; 
+    }
+    void uninTwoNode(int i, int j)
+    {
+        int parentI = findParent(i); 
+        int parentJ = findParent(j); 
+        if(parentI!=parentJ)
+        {
+            parent[parentI] = parentJ;
+            count--; 
+        }
+    }
+    
+    int findParent(int i)
+    {
+        while(parent[i]!=i)
+        {
+            parent[i] = parent[parent[i]];
+            i = parent[i];
+        }
+        
+        return i; 
+    }
+    
+};
+class Solution {
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        
+        // account(n)
+        UF uf(accounts.size()); 
+        unordered_map<string, int> record; 
+        for(int i=0; i < accounts.size(); i++)
+        {
+            for(int j=1; j< accounts[i].size(); j++)
+            {
+                if(record.find(accounts[i][j])!=record.end())
+                {
+                    uf.uninTwoNode(i, record[accounts[i][j]]); 
+                }
+                else
+                {
+                    record[accounts[i][j]]=i; 
+                }
+            }
+        }
+        record.clear(); // clean. 
+        unordered_map<int, set<string>> recordCount; 
+        for(int i=0; i< accounts.size(); i++)
+        {
+            int parentNode = uf.findParent(i);
+        //    cout<< "parentNode:" << parentNode<< "\n";             
+            for(int j=1; j< accounts[i].size(); j++)
+              recordCount[parentNode].insert(accounts[i][j]); 
+        }
+        vector<vector<string>> ret(recordCount.size()); 
+        int count =0; 
+        for(auto it = recordCount.begin(); it!= recordCount.end(); it++)
+        {
+            ret[count].push_back(accounts[(*it).first][0]); 
+            for(auto it2 = (*it).second.begin(); it2!=(*it).second.end(); it2++)
+            {
+                ret[count].push_back((*it2)); 
+            }
+            count++; 
+        }
+        return ret; 
+        
+    }
+};
+// 方法2. 
+class Solution {
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        
+        unordered_map<string, vector<int>> graph; 
+        for(int i=0; i< accounts.size(); i++)
+        {
+            for(int j =1; j< accounts[i].size(); j++)
+            {
+                graph[accounts[i][j]].push_back(i); 
+            }
+        }
+        vector<bool> visit(accounts.size()); 
+        vector<vector<string>> ret; 
+        for(int i=0; i< accounts.size(); i++)
+        {
+            if(visit[i])
+                continue; 
+            
+            queue<int> que; 
+            que.push(i);
+            set<string> oneResult; 
+            while(que.size())
+            {
+                int iSize = que.size(); 
+                
+                for(int i =0; i< iSize; i++)
+                {
+                    int topNode = que.front(); 
+                    que.pop(); 
+                    visit[topNode] = true; 
+                    
+                    for(int j =1 ; j< accounts[topNode].size(); j++)
+                    {
+                        oneResult.insert(accounts[topNode][j]);
+                        for(int k=0; k< graph[accounts[topNode][j]].size(); k++)
+                        {
+                            if(visit[graph[accounts[topNode][j]][k]]==false)
+                            {
+                                que.push(graph[accounts[topNode][j]][k]); 
+                                visit[graph[accounts[topNode][j]][k]] = true; 
+                            }
+                        }
+                    }
+                }
+            }
+            int currentSize = ret.size(); 
+            ret.resize(currentSize+1);
+            ret[currentSize].push_back(accounts[i][0]); 
+            for(set<string>::iterator it = oneResult.begin(); it!=oneResult.end(); it++)
+            {
+                ret[currentSize].push_back((*it)); 
+            }
+                        
+        }
+            
+            return ret;         
+    }
+};
+
+```
 
 #### floydWarshall方法
 
