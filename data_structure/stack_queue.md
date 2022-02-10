@@ -210,6 +210,91 @@ public:
 };
 ```
 
+Basic Calculator
+
+```cpp
+// Some code
+class Solution {
+public:
+    int calculate(string s) {
+        s.push_back('+'); 
+        int start =0; 
+        return dfs(s, start); 
+    }
+    
+    
+    int dfs(string& s,  int & start)
+    {
+        int num =0; 
+        
+        vector<int> stack; 
+        char sign = '+'; 
+        while(start<s.size())
+        {
+            if(isdigit(s[start]) )
+            {
+                num = (num*10 + (s[start]-'0')); 
+            }
+            else if(s[start] == '+' || 
+                    s[start] == '-' ||
+                    s[start] == '*' ||
+                    s[start] == '/' )
+            {
+                if(sign == '+')
+                    stack.push_back(num); 
+                else if(sign == '-')
+                    stack.push_back(-num);
+                else if(sign == '*')
+                {
+                    int prev = stack.back(); 
+                    stack.pop_back(); 
+                    stack.push_back(prev*num);
+                }
+                else if(sign == '/')
+                {
+                    int prev = stack.back(); 
+                    stack.pop_back(); 
+                    stack.push_back(prev/num);                    
+                }
+                num =0; 
+                sign = s[start];                     
+            }
+            else if(s[start]=='(')
+            {
+                start++; 
+                num = dfs(s, start);
+            }
+            else if(s[start]==')')
+            {
+                if(sign == '+')
+                    stack.push_back(num); 
+                else if(sign == '-')
+                    stack.push_back(-num);
+                else if(sign == '*')
+                {
+                    int prev = stack.back(); 
+                    stack.pop_back(); 
+                    stack.push_back(prev*num);
+                }
+                else if(sign == '/')
+                {
+                    int prev = stack.back(); 
+                    stack.pop_back(); 
+                    stack.push_back(prev/num);                    
+                }
+                break; 
+            }    
+            start++; 
+        }
+        int sum =0; 
+        for(int i=0; i< stack.size(); i++)
+            sum+=stack[i];
+        return sum; 
+        
+    }
+};c++
+```
+
 利用栈进行 DFS 递归搜索模板
 
 ```go
