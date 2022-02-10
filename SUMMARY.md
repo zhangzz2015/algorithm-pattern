@@ -29,6 +29,7 @@
 * [二叉搜索树](advanced\_algorithm/binary\_search\_tree.md)
 * [回溯法](advanced\_algorithm/backtrack.md)
 * [其他的技巧](suan-fa-si-wei/qi-ta-de-ji-qiao.md)
+* [字符串操作](suan-fa-si-wei/zi-fu-chuan-cao-zuo.md)
 
 ## 面试公司
 
