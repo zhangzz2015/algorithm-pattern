@@ -43,3 +43,4 @@
 ## 系统设计
 
 * [基本组件](xi-tong-she-ji/ji-ben-zu-jian.md)
+* [How to design google drive](xi-tong-she-ji/how-to-design-google-drive.md)
