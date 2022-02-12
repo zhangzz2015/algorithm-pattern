@@ -756,6 +756,66 @@ func min(a,b int)int{
 
 > dp\[i-a\[j]] 决策 a\[j]是否参与
 
+Coin Change 2
+
+```cpp
+// Some code
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+                
+        // Time O(n*m) Space O(n*m)  Cost: 15min.   
+        ///   dp[i][j]    chose from 0 to i coins and get target amount j. combination
+        //    dp[i][j]    dp[i][j] =  dp[i-1][j]  +  loop k from 0 to max num coins[i]. dp[i-1][j-coins[i]*k]
+        //    dp[i][j]    dp[i][j] = dp[i-1][j] +  dp[i][j - coins[i]] ; 
+        //   we can improve it further to optimize memory to O(n)
+        
+        vector<int> dp(amount+1, 0); 
+        dp[0] =1; 
+        for(int i=0; i<coins.size(); i++)
+        {
+            
+            for(int j=coins[i]; j <=amount; j++)
+            {
+                dp[j] +=dp[j-coins[i]];
+            }
+        }
+        return dp[amount]; 
+    }
+    
+    int method1(int amount, vector<int>& coins)
+    {
+        vector<vector<int>> dp(coins.size()+1, vector<int>(amount+1, 0)); 
+        
+        for(int i=0; i<=coins.size(); i++)
+        {
+            for(int j=0; j<=amount; j++)
+            {
+                if(j==0)
+                    dp[i][j] = 1; 
+                else if(i==0)
+                    dp[i][j] = 0; 
+                else
+                {
+                    int k=0; 
+                   /* while(j >=coins[i-1]*k)
+                    {
+                        dp[i][j] +=dp[i-1][j-coins[i-1]*k]; 
+                        k++;
+                    }     */ 
+                    if(j-coins[i-1]>=0)
+                      dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]]; 
+                    else
+                      dp[i][j] = dp[i-1][j] ;  
+                } 
+            }
+        }
+        
+        return dp[coins.size()][amount];         
+    }
+};
+```
+
 ### [backpack](https://www.lintcode.com/problem/backpack/description)
 
 > 在 n 个物品中挑选若干物品装入背包，最多能装多满？假设背包的大小为 m，每个物品的大小为 A\[i]
