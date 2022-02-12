@@ -30,6 +30,7 @@
 * [回溯法](advanced\_algorithm/backtrack.md)
 * [其他的技巧](suan-fa-si-wei/qi-ta-de-ji-qiao.md)
 * [字符串操作](suan-fa-si-wei/zi-fu-chuan-cao-zuo.md)
+* [Sampling方法](suan-fa-si-wei/sampling-fang-fa.md)
 
 ## 面试公司
 
