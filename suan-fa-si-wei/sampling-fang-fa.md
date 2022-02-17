@@ -25,3 +25,37 @@ public:
     }
 };
 ```
+
+### [Linked List Random Node](https://leetcode.com/problems/linked-list-random-node/)
+
+```cpp
+// Some code
+class Solution {
+public:
+    
+    ListNode* head_node; 
+    Solution(ListNode* head) {
+        head_node = head; 
+    }
+    
+    int getRandom() {
+        
+        ListNode* current = head_node; 
+        int result = current->val; 
+        int num =0; 
+        while(current)
+        {
+            num++; 
+            int randval = rand()%num;
+            if(randval ==0 ) // 1/num  to use this val.
+            {
+                result = current->val; 
+            }            
+            current = current->next; 
+        }
+        
+        return result; 
+        
+    }
+};
+```
