@@ -512,6 +512,62 @@ public:
 };
 ```
 
+### [Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/)
+
+```cpp
+// Some code
+// dp method. 
+class Solution {
+public:
+    int findNumberOfLIS(vector<int>& nums) {
+        
+        //  use dp method. 
+        //  dp1[i]   the end of i maxLengh. Loop j from 0 to i-1.  if(nums[i]>nums[j] )
+        //                                                              if(dp2[j]+1>maxNum)  update maxNum maxLengh. 
+        //  dp2[i]   total num  when the end of i LIS is equal maxLengh. 
+        // Time O(n^2)  Space O(n)  Use 15min. 
+        vector<pair<int,int>> dp(nums.size()); 
+        dp[0].first = 1; // maxLengh = 1
+        dp[0].second = 1;// maxNum = 1;  
+        int totalMaxLen = 1; 
+        for(int i =1; i< nums.size(); i++ )
+        {
+            int maxLength=1; 
+            int maxNum = 1; 
+            for(int j=0; j< i; j++)
+            {
+                if(nums[i]>nums[j])
+                {
+                   if(dp[j].first+1>maxLength) 
+                   {
+                       maxNum = dp[j].second; 
+                       maxLength = dp[j].first+1; 
+                   }
+                   else if(dp[j].first+1==maxLength)
+                   {
+                       maxNum += dp[j].second;
+                   }
+                }
+            }
+            dp[i].first = maxLength; 
+            dp[i].second = maxNum; 
+            totalMaxLen = max(totalMaxLen, maxLength); 
+        }
+        int ret =0; 
+        for(int i=0; i< nums.size(); i++)
+        {
+            if(dp[i].first == totalMaxLen)
+            {
+                ret += dp[i].second; 
+            }
+        }
+        return ret; 
+        
+        
+    }
+};
+```
+
 ### [word-break](https://leetcode-cn.com/problems/word-break/)
 
 > 给定一个**非空**字符串  _s_  和一个包含**非空**单词列表的字典  _wordDict_，判定  _s_  是否可以被空格拆分为一个或多个在字典中出现的单词。
