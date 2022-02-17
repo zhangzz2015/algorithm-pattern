@@ -7,6 +7,10 @@
 * [go 语言入门](introduction/golang.md)
 * [算法快速入门](introduction/quickstart.md)
 
+***
+
+* [刷题顺序](shua-ti-shun-xu.md)
+
 ## 数据结构篇
 
 * [栈和队列](data\_structure/stack\_queue.md)
