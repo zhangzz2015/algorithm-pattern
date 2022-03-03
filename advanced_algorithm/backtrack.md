@@ -222,50 +222,45 @@ public:
 
 ### [permutations-ii](https://leetcode-cn.com/problems/permutations-ii/)
 
-> 给定一个可包含重复数字的序列，返回所有不重复的全排列。
+> 给定一个可包含重复数字的序列，返回所有不重复的全排列。注意剪枝策略，包括去重复
 
 ```go
-import (
-	"sort"
-)
-
-func permuteUnique(nums []int) [][]int {
-	result := make([][]int, 0)
-	list := make([]int, 0)
-	// 标记这个元素是否已经添加到结果集
-	visited := make([]bool, len(nums))
-	sort.Ints(nums)
-	backtrack(nums, visited, list, &result)
-	return result
-}
-
-// nums 输入集合
-// visited 当前递归标记过的元素
-// list 临时结果集
-// result 最终结果
-func backtrack(nums []int, visited []bool, list []int, result *[][]int) {
-	// 临时结果和输入集合长度一致 才是全排列
-	if len(list) == len(nums) {
-		subResult := make([]int, len(list))
-		copy(subResult, list)
-		*result = append(*result, subResult)
-	}
-	for i := 0; i < len(nums); i++ {
-		// 已经添加过的元素，直接跳过
-		if visited[i] {
-			continue
-		}
-        // 上一个元素和当前相同，并且没有访问过就跳过
-		if i != 0 && nums[i] == nums[i-1] && !visited[i-1] {
-			continue
-		}
-		list = append(list, nums[i])
-		visited[i] = true
-		backtrack(nums, visited, list, result)
-		visited[i] = false
-		list = list[0 : len(list)-1]
-	}
-}
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) { 
+        
+        sort(nums.begin(), nums.end());
+        vector<int> onePath; 
+        vector<vector<int>> ret; 
+        vector<bool> visit(nums.size(), false); 
+        backTrack(nums, visit, onePath, ret); 
+        
+        return ret;         
+    }
+    
+    
+    
+    void backTrack(vector<int>& nums, vector<bool>& visit, vector<int>& onePath, vector<vector<int>>& ret)
+    {
+        if(onePath.size()==nums.size())
+        {
+            ret.push_back(onePath); 
+            return;             
+        }
+        
+        for(int i=0; i< nums.size(); i++)
+        {
+            if(visit[i])  continue; 
+            if(i>0 && nums[i]==nums[i-1] && visit[i-1]==false) continue; 
+            visit[i] = true; 
+            onePath.push_back(nums[i]); 
+            backTrack(nums, visit, onePath, ret); 
+            onePath.pop_back(); 
+            visit[i] = false; 
+        }                
+    }
+        
+};
 ```
 
 ### [N-Queens](https://leetcode.com/problems/n-queens/)
