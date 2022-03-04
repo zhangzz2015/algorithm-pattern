@@ -4,6 +4,68 @@
 
 #### KMP方法
 
+```cpp
+// Some code+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        
+        
+        //  kmp method. 
+        // calculate prefix. 
+        
+        if(haystack.size()< needle.size())
+            return -1; 
+        
+        vector<int> prefix(needle.size(), 0); 
+        int left =0; 
+        int right =1; 
+        
+        // sliding windows. 
+        while(right < needle.size())
+        {
+            while(left>0 && needle[left] != needle[right])
+            {
+                left = prefix[left-1]; 
+            }
+            
+            if(needle[left]==needle[right])
+                left ++;
+            
+            
+            prefix[right] = left; 
+            right++;             
+        }
+        
+        
+        left =0; 
+        right =0; 
+        
+        while(left < haystack.size() && right < needle.size())
+        {
+            while(right>0 && haystack[left] != needle[right] )
+            {
+                right = prefix[right-1]; 
+            } 
+            
+            if(haystack[left] == needle[right] )
+                right++; 
+
+            left++; 
+        }
+        
+        if(right == needle.size())
+        {
+            return  left - right; 
+        }
+        else
+            return -1; 
+        
+        
+    }
+};
+```
+
 #### Rolling hash方法
 
 ```cpp
