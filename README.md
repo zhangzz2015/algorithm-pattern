@@ -26,6 +26,7 @@
 - [链表](./data_structure/linked_list.md)
 - [栈和队列](./data_structure/stack_queue.md)
 - [二进制](./data_structure/binary_op.md)
+- [图](./shu-ju-jie-gou-pian/tu.md)
 
 ### 基础算法篇 🐮
 
