@@ -35,17 +35,7 @@
 
 1. Can you describe your most challenging project and what steps you individually made to succeed in this project?
 
-Customer engage our one product (highsigma analysis) and find our current solution is slower and accuracy is not good. After communicating with customer, find our current algri&#x20;
-
-&#x20;Redesign highSimga application. Decouple application from FE and BE part to improve multiple process scaling up to 200 cores. To resolve high dimension accuracy and performance, combine importance sampling and machine learning method to predict circuit yield. Improve 3-5x speedup under high dimension situation.
-
-&#x20;
-
-&#x20;
-
-&#x20;
-
-&#x20;
+Customer engage our one product (highsigma analysis) and find our current solution is slower and accuracy is not good. After communicating with customer and gather more information about user cases, find our current algorithm can't work well for high dimension situation. At the same time, we found application has strong couple with FE and BE, parallel scaling and job schedule balance is not good.  Because evaluation schedule is very tight (three month). We made detailed improvement plan include prototype verification considering machine learning model to filter high dimension, redesign whole flow to decouple application from FE and BE to improve scaling. I setup weekly target and milestone.  I lead two engineers to work on this project and setup daily sync-up meeting. I mainly focus on machine model evaluation and high level architect design. Finally, we combine importance sampling and machine learning method (lasso model) to predict circuit yield. It can resolve customer high dimension problem and get 3-5x speedup for all engaged cases. At the same time, new design can get linear scaling speedup up to 200 cores. We win the customer business.&#x20;
 
 1. From a scale of 0 to 5, 5 being the highest – what number will you rate yourself in the following areas of experience to overall  professional industry peers **(it is not a requirement to have experience in all category):**
 
@@ -55,47 +45,47 @@ Customer engage our one product (highsigma analysis) and find our current soluti
 
 &#x20;
 
-OO Design Proficiency                    :
+OO Design Proficiency      3               :
 
-Core Java                                             :
+Core Java                           0&#x20;
 
-C++ (v.11-20)                                     :
+C++ (v.11-20)                      3               :
 
-Go(pher) Language                         :
+Go(pher) Language             1             :
 
-RUST                                                     :
+RUST                                     1                 :
 
-Boost Library                                      :
+Boost Library                        3             :
 
-Python                                                 :
+Python                                   2               :
 
-Linux Distr. Sys. Programing         :
+Linux Distr. Sys. Programing     3    :
 
-Algorithm                                            :
+Algorithm                                 4           :
 
-Data Structures                                 :
+Data Structures                        4         :
 
-Succinct data structures                :
+Succinct data structures        0        :
 
-Information Retrieval (IR)             :
+Information Retrieval (IR)       1      :
 
-Hadoop/HDFS/Hive                        :
+Hadoop/HDFS/Hive                1        :
 
-SQL Language                                    :
+SQL Language                         1           :
 
-Spark                                                     :
+Spark                                        0             :
 
-Scala                                                      :
+Scala                                         0             :
 
-NoSQL/MongoDB/Cassandra      :
+NoSQL/MongoDB/Cassandra   1   :
 
-REST/API Development                 :
+REST/API Development           1      :
 
-Docker/Container                            :
+Docker/Container                  1          :
 
-Kubernetes Integration                 :
+Kubernetes Integration        1         :
 
-Continuous Integ../Delivery        :
+Continuous Integ../Delivery   0      :
 
 &#x20;
 
