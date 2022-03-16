@@ -28,15 +28,14 @@
 2.
    1. : Curious and Patience
    2. : Analytical skills.
-   3. :
-
-&#x20;
+   3. : Deep dive.&#x20;
+   4. : Busines driven priority.&#x20;
 
 &#x20;
 
 1. Can you describe your most challenging project and what steps you individually made to succeed in this project?
 
-Customer engage our one product (highsigma analysis) and find our current solution is slower and accuracy is not good.&#x20;
+Customer engage our one product (highsigma analysis) and find our current solution is slower and accuracy is not good. After communicating with customer, find our current algri&#x20;
 
 &#x20;Redesign highSimga application. Decouple application from FE and BE part to improve multiple process scaling up to 200 cores. To resolve high dimension accuracy and performance, combine importance sampling and machine learning method to predict circuit yield. Improve 3-5x speedup under high dimension situation.
 
